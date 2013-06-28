@@ -1,10 +1,12 @@
 package com.xiaoquyi.restfulapi;
 
 
-import javax.ws.rs.Path;
-import javax.ws.rs.GET;
+import java.io.IOException;
+
+import javax.ws.rs.*;
 
 import com.sun.jersey.spi.resource.Singleton;
+import com.xiaoquyi.utilities.*;
 
 
 
@@ -13,8 +15,9 @@ import com.sun.jersey.spi.resource.Singleton;
 public class Test extends AbstractAPI {
 
 	@GET
-	public String printHello() {
-		writtingLogs(ui.getRequestUri().toString());
+	public String printHello() throws IOException {
+		Logger loger = new Logger();
+		Logger.infoWritting(getSelfInfo());
 		return "hello,world!";
 	}
 }
