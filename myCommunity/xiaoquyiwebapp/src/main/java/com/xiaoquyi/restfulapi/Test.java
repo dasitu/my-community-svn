@@ -16,7 +16,6 @@ public class Test extends AbstractAPI {
 
 	@GET
 	public String printHello() throws IOException {
-		Logger loger = new Logger();
 		Logger.infoWritting(getSelfInfo());
 		return "hello,world!";
 	}
