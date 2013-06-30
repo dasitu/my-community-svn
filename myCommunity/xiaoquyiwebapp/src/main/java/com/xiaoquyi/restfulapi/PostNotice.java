@@ -21,7 +21,7 @@ public class PostNotice extends AbstractAPI{
 			@FormDataParam("file") FormDataContentDisposition fcdsFile) throws IOException {
 		Logger.infoWritting(getSelfInfo());
 		
-		String fileLocation = "/files/" + fcdsFile.getFileName();
+		String fileLocation = Miscellaneous.IMAGE_REPOSITORY + fcdsFile.getFileName();
 	    File destFile = new File(fileLocation);
 	    Logger.infoWritting(fileLocation);
 	    // your code here to copy file to destFile
@@ -36,12 +36,12 @@ public class PostNotice extends AbstractAPI{
 			@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
 		Logger.infoWritting(getSelfInfo());
-			String uploadedFileLocation = "d://uploaded/" + fileDetail.getFileName();
+			String uploadedFileLocation = Miscellaneous.IMAGE_REPOSITORY + fileDetail.getFileName();
 			Logger.infoWritting(uploadedFileLocation);
 			// save it
 			writeToFile(uploadedInputStream, uploadedFileLocation);
 	 
-			String output = "File uploaded to : " + uploadedFileLocation;
+			String output = "File uploaded to : " + "localhost:8080/"+uploadedFileLocation;
 	 
 			return Response.status(200).entity(output).build();
 	 
