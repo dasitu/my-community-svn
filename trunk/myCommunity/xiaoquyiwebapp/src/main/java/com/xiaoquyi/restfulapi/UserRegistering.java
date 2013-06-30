@@ -32,16 +32,8 @@ public class UserRegistering extends AbstractAPI {
 		Logger.infoWritting(getSelfInfo());
 		Logger.debugWritting(sqlStatement);
 
-		try {
-			Connection conn = DBconnector.getConnection();
-
-			Statement st = conn.createStatement();
-			st.executeUpdate(sqlStatement);
+		if ((Integer)DBconnector.executeSqlStatement(sqlStatement) != -1)
 			return "0";
-		} 
-		catch(SQLException sqle) {
-			Logger.infoWritting(sqle.getMessage());
-			return "-1";
-		}
+		return "-1";
 	}
 }

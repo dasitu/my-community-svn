@@ -37,6 +37,7 @@ public class AbstractAPI {
 	public String getSelfInfo() {
 		StackTraceElement currentElement = (new Throwable()).getStackTrace()[1];
 		String selfInfo = String.format("\tApiURL:\t%s\n", ui.getAbsolutePath().toString());
+		selfInfo += String.format("\tRequest:\t%s\n", req.toString());
 		selfInfo += String.format("\tClassName:\t%s\n", currentElement.getClassName());
 		selfInfo += String.format("\tMethodName:\t%s\n",  currentElement.getMethodName());
 		return selfInfo;

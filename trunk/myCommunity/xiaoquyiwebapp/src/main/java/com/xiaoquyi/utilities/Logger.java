@@ -13,7 +13,7 @@ public class Logger {
 	private final static String ERROR_PROMPT = "[ERROR]:\n";
 	private final static String WARNING_PROMPT = "[WARNING]:\n";
 	private final static String DEBUG_PROMPT = "[DEBUG]:\n";
-	private final static String LOG_FILE_NAME = "API_access.log";
+	private final static String LOG_FILE_NAME = "../logs/API_access.log";
 	
 	private static boolean setLogFile() {
 		logFile = new File(LOG_FILE_NAME);
