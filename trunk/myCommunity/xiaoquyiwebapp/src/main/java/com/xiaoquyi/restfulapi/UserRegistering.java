@@ -30,7 +30,6 @@ public class UserRegistering extends AbstractAPI {
 
 
 		Logger.infoWritting(getSelfInfo());
-		Logger.debugWritting(sqlStatement);
 
 		if ((Integer)DBconnector.executeSqlStatement(sqlStatement) != -1)
 			return "0";
