@@ -17,16 +17,21 @@ public class DBconnector {
 	}
 	
 	public static Object executeSqlStatement(String sqlStatement) throws NamingException, IOException {
-		
+		Logger.debugWritting(sqlStatement);
+		Object re = null;
 		try {
 			Connection conn = getConnection();
 			
 			
 			Statement st = conn.createStatement();
-			if (sqlStatement.startsWith("select"))
-				return st.executeQuery(sqlStatement);
-			else
-				return st.executeUpdate(sqlStatement);
+			if (sqlStatement.startsWith("select")) {
+				re =  st.executeQuery(sqlStatement); //ResultSet type returned
+			}
+			else {
+				re = st.executeUpdate(sqlStatement);// int type returned
+			}
+			conn.close();
+			return re;
 		} 
 		catch(SQLException sqle) {
 			Logger.infoWritting(sqle.getMessage());

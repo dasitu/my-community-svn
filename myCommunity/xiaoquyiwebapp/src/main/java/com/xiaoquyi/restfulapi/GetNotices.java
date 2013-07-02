@@ -39,6 +39,7 @@ public class GetNotices extends AbstractAPI{
 			Timestamp publishTime = rs.getTimestamp("info_last_update");
 			Logger.debugWritting(content+ " " + title + " " + publishTime.toString());
 			Notice item = new Notice(title,content,publishTime.toString(),"no images");
+			//TODO: add image URL to DB
 			list.add(item);			
 		}
 		rs.close();

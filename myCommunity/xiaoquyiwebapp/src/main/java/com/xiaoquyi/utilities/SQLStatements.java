@@ -3,7 +3,7 @@ package com.xiaoquyi.utilities;
 public class SQLStatements {
 	public static final String S_LATSED_10_INFO = "select * from infor_table order by info_id desc limit 10;";
 	
-	
+	public static final String S_GET_PASSWD_OF_USER = "select * from user_table where user_name='%s';";
 	
 	
 	
@@ -12,5 +12,7 @@ public class SQLStatements {
 	
 	// The column order is info_id,user_id,comminity_id,info_text,info_visible,info_last_update and info_title.
 	public static final String I_POST_NOTICE = "INSERT INTO infor_table VALUES (0, %s, %s, '%s',%s,'%s','%s');";
+	
+	public static final String I_SESSION_RECORD = "INSERT INTO session_table VALUES (0, %s, '%s','%s');";
 	
 }
