@@ -3,7 +3,8 @@ package com.xiaoquyi.utilities;
 public class SQLStatements {
 	public static final String S_LATSED_10_INFO = "select * from infor_table order by info_id desc limit 10;";
 	
-	public static final String S_GET_PASSWD_OF_USER = "select * from user_table where user_name='%s';";
+	public static final String S_GET_PASSWD_BY_NAME = "select user_pass from user_table where user_name='%s';";
+	public static final String S_GET_USER_ID_BY_NAME = "select user_id from user_table where user_name='%s';";
 	
 	
 	
