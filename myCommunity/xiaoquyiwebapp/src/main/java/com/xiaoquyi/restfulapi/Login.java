@@ -17,7 +17,7 @@ public class Login extends AbstractAPI {
 	public String login(@QueryParam("user_name") String userName,
 						@QueryParam("password") String passwd) throws NamingException, IOException  {
 
-		String sqlGetPasswd = String.format(SQLStatements.S_GET_PASSWD_OF_USER,userName);
+		String sqlGetPasswd = String.format(SQLStatements.S_GET_PASSWD_BY_NAME,userName);
 		Object re = DBconnector.executeSqlStatement(sqlGetPasswd);
 
 
@@ -41,7 +41,7 @@ public class Login extends AbstractAPI {
 			Logger.debugWritting(String.format("Password from user is %s", passwd));
 			if (PassInDB.equals(passwd)) {
 				accessToken = generateAccessToken(userName + Miscellaneous.getCurrentTimestamp());
-				//TODO:create a session recode to DB
+				createSessionRecord(userName,accessToken);
 			}
 		}
 		catch (SQLException se) {
@@ -52,7 +52,7 @@ public class Login extends AbstractAPI {
 	}
 	
 	private String generateAccessToken(String userName) {
-	
+	//TODO:this method can be extract to a utility method of MD5 encrypto 
 	        String accessToken = null;  
 	        char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',  
 	                'a', 'b', 'c', 'd', 'e', 'f' };// 用来将字节转换成16进制表示的字符  
@@ -82,6 +82,40 @@ public class Login extends AbstractAPI {
 	        return accessToken;  
 	    }  
 		
+	private int createSessionRecord(String userName, String accessToken) throws NamingException, IOException {
 		
-	}
+		String sqlGetUid = String.format(SQLStatements.S_GET_USER_ID_BY_NAME,userName);
+		Object re = DBconnector.executeSqlStatement(sqlGetUid);
 
+
+		try {
+			if ((Integer)re == -1)
+				Logger.warningWritting("SQL execute exception,please check the sql statement and DB real data!");
+		}
+		catch(ClassCastException cce) {
+			Logger.warningWritting(cce.getMessage());
+		}
+
+		ResultSet rs = (ResultSet)re;
+		
+		try {
+			int uid = 0;
+			if (rs.next())
+				uid = rs.getInt("user_id");
+			rs.close();
+			Logger.debugWritting(String.format("sql [%s] executed and get the result: %s",sqlGetUid, uid));
+			
+			String sqlCreateSession = String.format(SQLStatements.I_SESSION_RECORD,uid,accessToken,Miscellaneous.getCurrentTimestamp());
+			DBconnector.executeSqlStatement(sqlCreateSession);
+			
+		}
+		catch (SQLException se) {
+			Logger.warningWritting(se.getMessage());
+			return -1;
+		}
+		return 0;
+		
+
+	}
+	
+	}
