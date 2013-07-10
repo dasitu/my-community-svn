@@ -11,7 +11,7 @@ public class DBconnector {
 
 	private static Connection getConnection() throws SQLException, NamingException {
 		InitialContext context = new InitialContext();
-		DataSource dataSource =(DataSource) context.lookup("jdbc/__mysql");
+		DataSource dataSource =(DataSource) context.lookup("java:/comp/env/jdbc/__mysql");
 		Connection conn = dataSource.getConnection();
 		return conn;
 	}
@@ -30,7 +30,7 @@ public class DBconnector {
 			else {
 				re = st.executeUpdate(sqlStatement);// int type returned
 			}
-			conn.close();
+//			conn.close();
 			return re;
 		} 
 		catch(SQLException sqle) {
