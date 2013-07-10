@@ -33,8 +33,10 @@ public class GetNotices extends AbstractAPI{
 		}
 		List<Notice> list = new LinkedList<Notice>();
 		ResultSet rs = (ResultSet)re;
+		Logger.warningWritting(rs.toString());
 		while (rs.next()) {
 			String content = rs.getString("info_text");
+			Logger.warningWritting(content);
 			String title = rs.getString("info_title");
 			Timestamp publishTime = rs.getTimestamp("info_last_update");
 			Logger.debugWritting(content+ " " + title + " " + publishTime.toString());
