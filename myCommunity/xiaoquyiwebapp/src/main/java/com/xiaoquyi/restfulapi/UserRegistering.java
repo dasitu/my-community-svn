@@ -25,8 +25,7 @@ public class UserRegistering extends AbstractAPI {
 				weibo,
 				email,
 				qq,
-				visible,
-				Miscellaneous.getCurrentTimestamp());
+				visible);
 
 
 		Logger.infoWritting(getSelfInfo());
