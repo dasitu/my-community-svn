@@ -14,7 +14,7 @@ import com.xiaoquyi.utilities.*;
 public class Login extends AbstractAPI {
 
 	@GET
-	public String login(@QueryParam("user_name") String userName,
+	public String login(@QueryParam("username") String userName,
 						@QueryParam("password") String passwd) throws NamingException, IOException  {
 
 		String sqlGetPasswd = String.format(SQLStatements.S_GET_PASSWD_BY_NAME,userName);
@@ -39,7 +39,8 @@ public class Login extends AbstractAPI {
 			rs.close();
 			Logger.debugWritting(String.format("sql [%s] executed and get the result: %s",sqlGetPasswd, PassInDB));
 			Logger.debugWritting(String.format("Password from user is %s", passwd));
-			if (PassInDB.equals(passwd)) {
+			if (PassInDB!=null && PassInDB.equals(passwd)) {
+				getHttpSession().setAttribute("username", userName);
 				accessToken = generateAccessToken(userName + Miscellaneous.getCurrentTimestamp());
 				createSessionRecord(userName,accessToken);
 			}

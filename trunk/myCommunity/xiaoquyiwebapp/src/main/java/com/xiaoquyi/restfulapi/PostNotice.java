@@ -35,6 +35,7 @@ public class PostNotice extends AbstractAPI{
 	public Response uploadFile(
 			@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
+		Logger.infoWritting(getHttpSession().getAttribute("username").toString());
 		Logger.infoWritting(getSelfInfo());
 			String uploadedFileLocation = Miscellaneous.IMAGE_REPOSITORY + fileDetail.getFileName();
 			Logger.infoWritting(uploadedFileLocation);
