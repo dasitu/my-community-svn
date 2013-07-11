@@ -14,10 +14,10 @@ public class UserRegistering extends AbstractAPI {
 	@POST
 	public String doRegister(@FormParam("username") String userName,
 			@FormParam("password") String passwd,
-			@FormParam("weibo") String weibo,
-			@FormParam("email") String email,
-			@FormParam("qq") String qq,
-			@FormParam("visible") String visible) throws SQLException, NamingException, IOException {
+			@DefaultValue("") @FormParam("weibo") String weibo,
+			@DefaultValue("") @FormParam("email") String email,
+			@DefaultValue("") @FormParam("qq") String qq,
+			@DefaultValue("1") @FormParam("visible") String visible) throws SQLException, NamingException, IOException {
 
 		String sqlStatement = String.format(SQLStatements.I_USER_REGISTERING,
 				userName,
