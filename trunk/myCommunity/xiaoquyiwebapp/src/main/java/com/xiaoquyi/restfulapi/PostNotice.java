@@ -9,7 +9,7 @@ import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 import com.xiaoquyi.utilities.*;
 
-@Path("/postnotice")
+@Path("/post_notice")
 public class PostNotice extends AbstractAPI{
 	
 	@POST

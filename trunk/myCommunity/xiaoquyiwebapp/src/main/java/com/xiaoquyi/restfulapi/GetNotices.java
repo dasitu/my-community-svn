@@ -6,22 +6,21 @@ import java.util.*;
 
 import javax.naming.NamingException;
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 
 import com.xiaoquyi.jsonelements.Notice;
 import com.xiaoquyi.utilities.*;
 
 
-@Path("/getnotices")
+@Path("/get_notices")
 public class GetNotices extends AbstractAPI{
 
 	@GET
-	@Produces("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Notice> getLatest10Notices() throws IOException, NamingException, SQLException {
 		Logger.infoWritting(getSelfInfo());
 		
-		String sqlStatement = SQLStatements.S_LATSED_10_INFO;
-
-		Object re = DBconnector.executeSqlStatement(sqlStatement);
+		Object re = DBconnector.executeSqlStatement(SQLStatements.S_LATSED_10_INFO);
 		
 		
 		try {
