@@ -8,6 +8,7 @@ public class SQLStatements {
 	
 	public static final String S_GET_USERS = "select * from user_table;";
 	
+	public static final String S_GET_COMMUNITIES = "select * from community_view;";
 	
 	
 	// The column order is user_id,user_name,user_password,user_weibo,user_email,visialbe and timestamp.
