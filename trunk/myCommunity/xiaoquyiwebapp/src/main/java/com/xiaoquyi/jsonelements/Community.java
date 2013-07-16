@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 @XmlRootElement   
-public class Community {
+public class Community extends Element{
 
 	public String province = "";
 	public String city = "";

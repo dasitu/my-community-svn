@@ -2,7 +2,7 @@ package com.xiaoquyi.jsonelements;
 import javax.xml.bind.annotation.*;
 
 @XmlRootElement   
-public class Notice {
+public class Notice extends Element {
 
 	public String title = "";
 	public String content = "";
