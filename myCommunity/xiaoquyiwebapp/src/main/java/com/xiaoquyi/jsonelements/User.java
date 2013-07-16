@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 @XmlRootElement   
-public class User {
+public class User  extends Element {
 
 	public String name = "";
 	public String weibo = "";
