@@ -14,8 +14,11 @@ public class SQLStatements {
 	// The column order is user_id,user_name,user_password,user_weibo,user_email,visialbe and timestamp.
 	public static final String I_USER_REGISTERING = "INSERT INTO user_table VALUES (0,'%s','%s','%s','%s','%s',%s,CURRENT_TIMESTAMP);";
 	
-	// The column order is info_id,user_id,comminity_id,info_text,info_visible,info_last_update and info_title.
+	// The column order is info_id,user_id,comminity_id,info_text,info_visible, info_title, info_last_update.
 	public static final String I_POST_NOTICE = "INSERT INTO infor_table VALUES (0, %s, %s, '%s',%s,'%s',CURRENT_TIMESTAMP);";
+	
+	// The column order is imag_id,info_id,imag_url and timestamp.
+	public static final String I_NOTICE_IMAGE = "INSERT INTO image_table VALUES (0, %s,'%s',CURRENT_TIMESTAMP);";
 	
 	public static final String I_SESSION_RECORD = "INSERT INTO session_table VALUES (0, %s, '%s','%s');";
 	
