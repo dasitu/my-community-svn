@@ -23,7 +23,7 @@
 	<category_index>0</category_index>
 	<zoom>0.75</zoom>
 	<x>0</x>
-	<y>0</y>
+	<y>120</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -121,7 +121,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2013-06-07 22:09:42</creation_date>
-			<updated_date>2013-07-16 16:09:48</updated_date>
+			<updated_date>2013-07-17 11:07:51</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -338,7 +338,7 @@
 			<description></description>
 			<logical_name>comm_lat</logical_name>
 			<physical_name>comm_lat</physical_name>
-			<type></type>
+			<type>float</type>
 		</word>
 		<word>
 			<id>14</id>
@@ -351,7 +351,7 @@
 			<description></description>
 			<logical_name>comm_lon</logical_name>
 			<physical_name>comm_lon</physical_name>
-			<type></type>
+			<type>float</type>
 		</word>
 		<word>
 			<id>15</id>
@@ -2183,7 +2183,7 @@
 			<connections>
 				<relation>
 					<id>5</id>
-					<source>8</source>
+					<source>11</source>
 					<target>7</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
@@ -2200,7 +2200,7 @@
 				</relation>
 				<relation>
 					<id>6</id>
-					<source>11</source>
+					<source>8</source>
 					<target>7</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
@@ -2258,7 +2258,7 @@
 				<normal_column>
 					<id>24</id>
 					<referenced_column>26</referenced_column>
-					<relation>5</relation>
+					<relation>6</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -2291,7 +2291,7 @@
 				<normal_column>
 					<id>25</id>
 					<referenced_column>45</referenced_column>
-					<relation>6</relation>
+					<relation>5</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -2848,7 +2848,7 @@
 			<connections>
 				<relation>
 					<id>8</id>
-					<source>11</source>
+					<source>8</source>
 					<target>10</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
@@ -2865,7 +2865,7 @@
 				</relation>
 				<relation>
 					<id>9</id>
-					<source>8</source>
+					<source>11</source>
 					<target>10</target>
 					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
@@ -2923,7 +2923,7 @@
 				<normal_column>
 					<id>39</id>
 					<referenced_column>26</referenced_column>
-					<relation>9</relation>
+					<relation>8</relation>
 					<description>the user who created this information</description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -2956,7 +2956,7 @@
 				<normal_column>
 					<id>40</id>
 					<referenced_column>45</referenced_column>
-					<relation>8</relation>
+					<relation>9</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -3379,7 +3379,7 @@
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type></type>
+					<type>float</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
@@ -3411,7 +3411,7 @@
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type></type>
+					<type>float</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
