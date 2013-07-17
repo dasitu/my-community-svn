@@ -31,7 +31,6 @@ public class PostNotice extends AbstractAPI{
 			String gid =  baseName 
 					+ "_" 
 					+ Long.toString(Miscellaneous.getCurrentTimeInSeconds())  
-//					+ Miscellaneous.getCurrentTimestamp().replace(" ", "_")
 					+ extend;
 			String uploadedFileLocation = Miscellaneous.IMAGE_REPOSITORY + gid;
 			InputStream is = dataBody.getValueAs(InputStream.class);
