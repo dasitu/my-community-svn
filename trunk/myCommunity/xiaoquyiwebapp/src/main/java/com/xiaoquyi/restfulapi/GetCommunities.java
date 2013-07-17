@@ -17,47 +17,47 @@ import com.xiaoquyi.utilities.SQLStatements;
 @Path("/get_communities")
 public class GetCommunities extends AbstractAPI {
 
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Community> getLatest10Notices() throws IOException, NamingException, SQLException {
-		Logger.infoWritting(getSelfInfo());
-		
-		Object re = DBconnector.executeSqlStatement(SQLStatements.S_GET_COMMUNITIES);
-		
-		
+	public List<Community> getLatest10Notices() throws IOException, NamingException {
+		Logger.info(getSelfInfo());
 		try {
-			if ((Integer)re == -1)
+			Connection conn = DBconnector.getConnection();
+			ResultSet rs = DBconnector.DBQuery(conn,SQLStatements.S_GET_COMMUNITIES);
+
+			if (rs == null)
 				return null;
+
+			List<Community> list = new LinkedList<Community>();
+			while (rs.next()) {
+				String province = rs.getString("prov_name");
+				Logger.warning(province);
+				String city = rs.getString("city_name");
+
+				String area = rs.getString("area_name");
+				Logger.warning(province);
+				String name = rs.getString("comm_name");
+
+				String address = rs.getString("comm_address");
+
+				int active = rs.getInt("comm_active");
+
+
+				Timestamp lastAccess = rs.getTimestamp("comm_last_update");
+				Logger.debug(province+ " " + city + " " + area + " " + name + " " + address
+						+ " " + lastAccess.toString());
+				Community item = new Community(province,city,area,address,name,active,lastAccess.toString());
+				list.add(item);			
+			}
+			rs.close();
+			conn.close();
+			return list;
+
 		}
-		catch(ClassCastException cce) {
-			Logger.warningWritting(cce.getMessage());
+		catch (SQLException e) {
+			return null;
 		}
-		List<Community> list = new LinkedList<Community>();
-		ResultSet rs = (ResultSet)re;
-		Logger.warningWritting(rs.toString());
-		while (rs.next()) {
-			String province = rs.getString("prov_name");
-			Logger.warningWritting(province);
-			String city = rs.getString("city_name");
-			
-			String area = rs.getString("area_name");
-			Logger.warningWritting(province);
-			String name = rs.getString("comm_name");
-			
-			String address = rs.getString("comm_address");
-			
-			int active = rs.getInt("comm_active");
-			
-			
-			Timestamp lastAccess = rs.getTimestamp("comm_last_update");
-			Logger.debugWritting(province+ " " + city + " " + area + " " + name + " " + address
-					 + " " + lastAccess.toString());
-			Community item = new Community(province,city,area,address,name,active,lastAccess.toString());
-			//TODO: add image URL to DB
-			list.add(item);			
-		}
-		rs.close();
-		return list;
+		
 	}
 }

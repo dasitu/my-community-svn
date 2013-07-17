@@ -1,6 +1,7 @@
 package com.xiaoquyi.restfulapi;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -23,33 +24,61 @@ public class GetUsers extends AbstractAPI {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<User> getUsers() throws IOException, SQLException, NamingException {
-		Logger.infoWritting(getSelfInfo());
+		Logger.info(getSelfInfo());
 		
-		Object re = DBconnector.executeSqlStatement(SQLStatements.S_GET_USERS);
-
+//		Object re = DBconnector.executeSqlStatement(SQLStatements.S_GET_USERS);
+//
+//		try {
+//			if ((Integer)re == -1)
+//				return null;
+//		}
+//		catch(ClassCastException cce) {
+//			Logger.warning(cce.getMessage());
+//		}
+//		List<User> list = new LinkedList<User>();
+//		ResultSet rs = (ResultSet)re;
+//		while (rs.next()) {
+//			String name = rs.getString("user_name");
+//			Logger.warning(name);
+//			String weibo = rs.getString("user_weibo");
+//			String qq = rs.getString("user_qq");
+//			String email = rs.getString("user_email");
+//			Timestamp lastAccess = rs.getTimestamp("user_last_update");
+//			Logger.debug(name+ " " + weibo + " " + qq + " " +  email + " " +  lastAccess.toString());
+//			User item = new User(name,weibo,qq,email,lastAccess.toString());
+//			list.add(item);			
+//		}
+//		rs.close();
+//		return list;
+		
+		
+		
 		try {
-			if ((Integer)re == -1)
+			Connection conn = DBconnector.getConnection();
+			ResultSet rs = DBconnector.DBQuery(conn,SQLStatements.S_GET_USERS);
+
+			if (rs == null)
 				return null;
+
+			List<User> list = new LinkedList<User>();
+			while (rs.next()) {
+				String name = rs.getString("user_name");
+				Logger.warning(name);
+				String weibo = rs.getString("user_weibo");
+				String qq = rs.getString("user_qq");
+				String email = rs.getString("user_email");
+				Timestamp lastAccess = rs.getTimestamp("user_last_update");
+				Logger.debug(name+ " " + weibo + " " + qq + " " +  email + " " +  lastAccess.toString());
+				User item = new User(name,weibo,qq,email,lastAccess.toString());
+				list.add(item);			
+			}
+			rs.close();
+			conn.close();
+			return list;
+
 		}
-		catch(ClassCastException cce) {
-			Logger.warningWritting(cce.getMessage());
+		catch (SQLException e) {
+			return null;
 		}
-		List<User> list = new LinkedList<User>();
-		ResultSet rs = (ResultSet)re;
-		Logger.warningWritting(rs.toString());
-		while (rs.next()) {
-			String name = rs.getString("user_name");
-			Logger.warningWritting(name);
-			String weibo = rs.getString("user_weibo");
-			String qq = rs.getString("user_qq");
-			String email = rs.getString("user_email");
-			Timestamp lastAccess = rs.getTimestamp("user_last_update");
-			Logger.debugWritting(name+ " " + weibo + " " + qq + " " +  email + " " +  lastAccess.toString());
-			User item = new User(name,weibo,qq,email,lastAccess.toString());
-			list.add(item);			
-		}
-		rs.close();
-		return list;
-		
 	}
 }
