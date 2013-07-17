@@ -18,33 +18,59 @@ public class GetNotices extends AbstractAPI{
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Notice> getLatest10Notices() throws IOException, NamingException, SQLException {
-		Logger.infoWritting(getSelfInfo());
+		Logger.info(getSelfInfo());
 		
-		Object re = DBconnector.executeSqlStatement(SQLStatements.S_LATSED_10_INFO);
+//		Object re = DBconnector.executeSqlStatement(SQLStatements.S_LATSED_10_INFO);
+//		
+//		
+//		try {
+//			if ((Integer)re == -1)
+//				return null;
+//		}
+//		catch(ClassCastException cce) {
+//			Logger.warning(cce.getMessage());
+//		}
+//		List<Notice> list = new LinkedList<Notice>();
+//		ResultSet rs = (ResultSet)re;
+//		Logger.warning(rs.toString());
+//		while (rs.next()) {
+//			String content = rs.getString("info_text");
+//			Logger.warning(content);
+//			String title = rs.getString("info_title");
+//			Timestamp publishTime = rs.getTimestamp("info_last_update");
+//			Logger.debug(content+ " " + title + " " + publishTime.toString());
+//			Notice item = new Notice(title,content,publishTime.toString(),"no images");
+//			list.add(item);			
+//		}
+//		rs.close();
+//		return list;
 		
 		
 		try {
-			if ((Integer)re == -1)
+			Connection conn = DBconnector.getConnection();
+			ResultSet rs = DBconnector.DBQuery(conn,SQLStatements.S_LATSED_10_INFO);
+
+			if (rs == null)
 				return null;
+
+			List<Notice> list = new LinkedList<Notice>();
+			while (rs.next()) {
+				String content = rs.getString("info_text");
+				Logger.warning(content);
+				String title = rs.getString("info_title");
+				Timestamp publishTime = rs.getTimestamp("info_last_update");
+				Logger.debug(content+ " " + title + " " + publishTime.toString());
+				Notice item = new Notice(title,content,publishTime.toString(),"no images");
+				list.add(item);			
+			}
+			rs.close();
+			conn.close();
+			return list;
+
 		}
-		catch(ClassCastException cce) {
-			Logger.warningWritting(cce.getMessage());
+		catch (SQLException e) {
+			return null;
 		}
-		List<Notice> list = new LinkedList<Notice>();
-		ResultSet rs = (ResultSet)re;
-		Logger.warningWritting(rs.toString());
-		while (rs.next()) {
-			String content = rs.getString("info_text");
-			Logger.warningWritting(content);
-			String title = rs.getString("info_title");
-			Timestamp publishTime = rs.getTimestamp("info_last_update");
-			Logger.debugWritting(content+ " " + title + " " + publishTime.toString());
-			Notice item = new Notice(title,content,publishTime.toString(),"no images");
-			//TODO: add image URL to DB
-			list.add(item);			
-		}
-		rs.close();
-		return list;
 		
 	}
 }

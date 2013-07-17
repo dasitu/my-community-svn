@@ -15,7 +15,7 @@ public class SQLStatements {
 	public static final String I_USER_REGISTERING = "INSERT INTO user_table VALUES (0,'%s','%s','%s','%s','%s',%s,CURRENT_TIMESTAMP);";
 	
 	// The column order is info_id,user_id,comminity_id,info_text,info_visible,info_last_update and info_title.
-	public static final String I_POST_NOTICE = "INSERT INTO infor_table VALUES (0, %s, %s, '%s',%s,'%s','%s');";
+	public static final String I_POST_NOTICE = "INSERT INTO infor_table VALUES (0, %s, %s, '%s',%s,'%s',CURRENT_TIMESTAMP);";
 	
 	public static final String I_SESSION_RECORD = "INSERT INTO session_table VALUES (0, %s, '%s','%s');";
 	

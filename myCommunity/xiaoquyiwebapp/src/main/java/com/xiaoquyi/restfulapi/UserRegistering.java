@@ -28,10 +28,13 @@ public class UserRegistering extends AbstractAPI {
 				visible);
 
 
-		Logger.infoWritting(getSelfInfo());
-
-		if ((Integer)DBconnector.executeSqlStatement(sqlStatement) != -1)
+		Logger.info(getSelfInfo());
+		Connection conn = DBconnector.getConnection();
+		int re = DBconnector.DBUpdate(conn,sqlStatement);
+		conn.close();
+		if (re == -1) {
 			return "0";
+		}
 		return "-1";
 	}
 }

@@ -71,7 +71,7 @@ public class Logger {
 	
 	
 	
-	public static void infoWritting(String tw) throws IOException {
+	public static void info(String tw) throws IOException {
 		
 		if (ll.ordinal() < loggingLevel.INFO.ordinal()) {
 			return;
@@ -80,7 +80,7 @@ public class Logger {
 		doLogWritting(INFOR_PROMPT,tw);
 	}
 	
-	public static void errorWritting(String tw) throws IOException {
+	public static void error(String tw) throws IOException {
 		
 		if (ll.ordinal() < loggingLevel.ERROR.ordinal()) {
 			return;
@@ -90,7 +90,7 @@ public class Logger {
 		
 	}
 	
-	public static void debugWritting(String tw) throws IOException {
+	public static void debug(String tw) throws IOException {
 		
 		if (ll.ordinal() < loggingLevel.DEBUG.ordinal()) {
 			return;
@@ -100,7 +100,7 @@ public class Logger {
 		
 	}
 	
-	public static void warningWritting(String tw) throws IOException {
+	public static void warning(String tw) throws IOException {
 		
 		if (ll.ordinal() < loggingLevel.WARNING.ordinal()) {
 			return;
