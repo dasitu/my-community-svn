@@ -1,10 +1,16 @@
 package com.xiaoquyi.restfulapi;
 
 import java.io.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 //import java.util.logging.FileHandler;
 
 
+
+
+
+import javax.naming.NamingException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
@@ -20,27 +26,46 @@ public class PostNotice extends AbstractAPI{
 	public Response uploadFile(
 			@FormDataParam("title") String title,
 			@FormDataParam("content") String content,
-			@FormDataParam("file") List<FormDataBodyPart> dataBodies) throws IOException {
-
+			@FormDataParam("uid") String uid,
+			@FormDataParam("communityID") String communityID,
+			@FormDataParam("visiable") String visiable,
+			@FormDataParam("file") List<FormDataBodyPart> dataBodies) throws IOException, SQLException, NamingException {
+		// The column order is info_id,user_id,comminity_id,info_text,info_visible,info_last_update and info_title.
+		
+		String newNotice = String.format(SQLStatements.I_POST_NOTICE, uid, communityID,content,visiable,title);
+		
+		Connection conn = DBconnector.getConnection();
+		int noticeId = DBconnector.DBUpdate(conn, newNotice);
+		
+		
+		Logger.info(newNotice);
+		
+		
+		String addImage = null;
 		for(FormDataBodyPart dataBody:dataBodies) {
 
 			String fileName = dataBody.getContentDisposition().getFileName();
-			Logger.info(fileName);
 			String baseName = fileName.substring(0, fileName.lastIndexOf(".")-1);
 			String extend = fileName.substring(fileName.lastIndexOf("."));
-			String gid =  baseName 
+			String uniqueName =  baseName 
 					+ "_" 
 					+ Long.toString(Miscellaneous.getCurrentTimeInSeconds())  
 					+ extend;
-			String uploadedFileLocation = Miscellaneous.IMAGE_REPOSITORY + gid;
+			String uploadedFileLocation = Miscellaneous.IMAGE_REPOSITORY + uniqueName;
 			InputStream is = dataBody.getValueAs(InputStream.class);
 
-			Logger.info(is.toString());
+			
 			// save it
 			writeToFile(is, uploadedFileLocation);
-			Logger.info("file URL is = " + "http://localhost:8080/"+Miscellaneous.IMAGE_FOLDER+gid);
+			String url = "http://localhost:8080/"+Miscellaneous.IMAGE_FOLDER+uniqueName;
+			Logger.info("file URL is = " + url);
+			
+			addImage = String.format(SQLStatements.I_NOTICE_IMAGE, noticeId, url);
+			DBconnector.DBUpdate(conn, addImage);
+			Logger.info(addImage);
 			
 		}
+		conn.close();
 		return Response.status(200).entity("dfsfds").build();
 
 	}

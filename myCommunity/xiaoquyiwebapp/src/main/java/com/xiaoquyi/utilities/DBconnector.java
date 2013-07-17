@@ -58,15 +58,26 @@ public class DBconnector {
 	}
 
 
-	public static int DBUpdate(Connection conn,String sqlStatement) throws SQLException{
-		try {
-			Logger.debug(sqlStatement);
-		}
-		catch (IOException e) {
-			//Do nothing
-		}
-		Statement st = conn.createStatement();
-		return st.executeUpdate(sqlStatement);
+	public static int DBUpdate(Connection conn,String sqlStatement) throws SQLException, IOException{
+		if (conn == null)
+			return -1;
+        Statement stat = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int id = 0;
+        try{
+            stat = conn.createStatement();
+            ps = conn.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);  
+            ps.executeUpdate();
+            rs = ps.getGeneratedKeys();
+            if (rs.next()){
+                id = rs.getInt(1);
+            }
+            return id;
+        }catch(Exception e){
+           Logger.error(e.getMessage());
+        }
+        return -1;
 
 	}
 
