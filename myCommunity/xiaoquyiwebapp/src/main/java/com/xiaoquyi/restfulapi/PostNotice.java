@@ -14,12 +14,23 @@ import javax.naming.NamingException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
-import com.sun.jersey.multipart.FormDataBodyPart;
-import com.sun.jersey.multipart.FormDataParam;
+
+import com.sun.jersey.multipart.*;
 import com.xiaoquyi.utilities.*;
 
 @Path("/post_notice")
 public class PostNotice extends AbstractAPI{
+	
+	
+	@OPTIONS
+	public Response optionsResponse() throws IOException {
+		
+		
+		allowCORSPost();
+		
+		return Response.status(200).entity("asafdsa").build();
+
+	}
 
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
