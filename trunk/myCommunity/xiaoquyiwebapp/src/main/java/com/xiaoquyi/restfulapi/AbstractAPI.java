@@ -11,6 +11,8 @@ import javax.ws.rs.core.*;
 import javax.servlet.*; 
 import javax.servlet.http.*;
 
+import com.xiaoquyi.utilities.Logger;
+
 @SuppressWarnings("unused")
 public class AbstractAPI {
 
@@ -54,6 +56,16 @@ public class AbstractAPI {
 	
 	public HttpSession getHttpSession() {
 		return httpServletRequest.getSession();
+	}
+	
+	public void allowCORSPost() throws IOException {
+		
+		httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
+		httpServletResponse.addHeader("Access-Control-Allow-Headers", "origin,x-requested-with,Content-Type");
+		httpServletResponse.addHeader("Access-Control-Allow-Methods", "POST,OPTIONS");
+		Logger.info(httpServletResponse.toString());
+		Logger.info(httpServletResponse.getHeaderNames().toString());
+		
 	}
 	
 }

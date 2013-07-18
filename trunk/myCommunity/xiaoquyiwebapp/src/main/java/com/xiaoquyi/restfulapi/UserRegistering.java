@@ -5,11 +5,19 @@ import java.sql.*;
 
 import javax.naming.NamingException;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 
 import com.xiaoquyi.utilities.*;
 
 @Path("/user_register")
 public class UserRegistering extends AbstractAPI {
+	
+	@OPTIONS
+	public Response optionsResponse() throws IOException {
+		allowCORSPost();
+		return Response.status(200).entity("asafdsa").build();
+	}
+	
 
 	@POST
 	public String doRegister(@FormParam("username") String userName,
