@@ -58,14 +58,10 @@ public class AbstractAPI {
 		return httpServletRequest.getSession();
 	}
 	
-	public void allowCORSPost() throws IOException {
-		
+	public void allowCORS() throws IOException {
 		httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
 		httpServletResponse.addHeader("Access-Control-Allow-Headers", "origin,x-requested-with,Content-Type");
-		httpServletResponse.addHeader("Access-Control-Allow-Methods", "POST,OPTIONS");
-		Logger.info(httpServletResponse.toString());
-		Logger.info(httpServletResponse.getHeaderNames().toString());
-		
+		httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
 	}
 	
 }

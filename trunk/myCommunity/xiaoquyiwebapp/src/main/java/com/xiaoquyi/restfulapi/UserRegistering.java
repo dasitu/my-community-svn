@@ -14,19 +14,19 @@ public class UserRegistering extends AbstractAPI {
 	
 	@OPTIONS
 	public Response optionsResponse() throws IOException {
-		allowCORSPost();
+		allowCORS();
 		return Response.status(200).entity("asafdsa").build();
 	}
 	
 
 	@POST
-	public String doRegister(@FormParam("username") String userName,
+	public Response doRegister(@FormParam("username") String userName,
 			@FormParam("password") String passwd,
 			@DefaultValue("null") @FormParam("weibo") String weibo,
 			@DefaultValue("null") @FormParam("email") String email,
 			@DefaultValue("null") @FormParam("qq") String qq,
 			@DefaultValue("1") @FormParam("visible") String visible) throws SQLException, NamingException, IOException {
-
+		allowCORS();
 		String sqlStatement = String.format(SQLStatements.I_USER_REGISTERING,
 				userName,
 				passwd,
@@ -41,8 +41,8 @@ public class UserRegistering extends AbstractAPI {
 		int re = DBconnector.DBUpdate(conn,sqlStatement);
 		conn.close();
 		if (re == -1) {
-			return "0";
+			return Response.status(200).entity("{\"success\":\"true\"}").build();
 		}
-		return "-1";
+		return Response.status(200).entity("{\"success\":\"false\"}").build();
 	}
 }

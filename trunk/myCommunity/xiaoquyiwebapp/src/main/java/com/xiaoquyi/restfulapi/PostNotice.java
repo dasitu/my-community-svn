@@ -26,7 +26,7 @@ public class PostNotice extends AbstractAPI{
 	public Response optionsResponse() throws IOException {
 		
 		
-		allowCORSPost();
+		allowCORS();
 		
 		return Response.status(200).entity("asafdsa").build();
 
@@ -41,6 +41,7 @@ public class PostNotice extends AbstractAPI{
 			@FormDataParam("communityID") String communityID,
 			@FormDataParam("visiable") String visiable,
 			@FormDataParam("file") List<FormDataBodyPart> dataBodies) throws IOException, SQLException, NamingException {
+		allowCORS();
 		// The column order is info_id,user_id,comminity_id,info_text,info_visible,info_last_update and info_title.
 		
 		String newNotice = String.format(SQLStatements.I_POST_NOTICE, uid, communityID,content,visiable,title);

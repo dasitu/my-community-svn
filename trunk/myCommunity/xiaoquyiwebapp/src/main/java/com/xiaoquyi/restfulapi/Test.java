@@ -16,6 +16,7 @@ public class Test extends AbstractAPI {
 
 	@GET
 	public String printHello() throws IOException {
+		allowCORS(); 
 		Logger.info(getSelfInfo());
 		return "hello,world!";
 	}

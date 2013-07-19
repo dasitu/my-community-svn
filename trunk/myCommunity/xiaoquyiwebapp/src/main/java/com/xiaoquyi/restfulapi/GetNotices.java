@@ -18,6 +18,7 @@ public class GetNotices extends AbstractAPI{
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Notice> getLatest10Notices() throws IOException, NamingException, SQLException {
+		allowCORS(); 
 		Logger.info(getSelfInfo());
 		
 //		Object re = DBconnector.executeSqlStatement(SQLStatements.S_LATSED_10_INFO);

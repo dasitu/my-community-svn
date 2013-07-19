@@ -16,7 +16,7 @@ public class Login extends AbstractAPI {
 	@GET
 	public String login(@QueryParam("username") String userName,
 			@QueryParam("password") String passwd) throws NamingException, IOException  {
-
+		allowCORS(); 
 		String sqlGetPasswd = String.format(SQLStatements.S_GET_PASSWD_BY_NAME,userName);
 		
 
