@@ -17,8 +17,8 @@ public class Login extends AbstractAPI {
 	public String login(@QueryParam("username") String userName,
 			@QueryParam("password") String passwd) throws NamingException, IOException  {
 		allowCORS(); 
-		String sqlGetPasswd = String.format(SQLStatements.S_GET_ACCESSTOKEN_BY_UID,userName);
-		
+		String sqlGetPasswd = String.format(SQLStatements.S_GET_PASSWD_BY_NAME,userName);
+
 
 
 		String accessToken = "-1";
@@ -37,7 +37,7 @@ public class Login extends AbstractAPI {
 			if (PassInDB!=null && PassInDB.equals(passwd)) {
 				getHttpSession().setAttribute("username", userName);
 				accessToken = generateAccessToken(userName + Miscellaneous.getCurrentTimestamp());
-				createSessionRecord(conn, userName,accessToken);
+				createOrUpdateSessionRecord(conn, uid,accessToken);
 			}
 			conn.close();
 		}
@@ -45,10 +45,10 @@ public class Login extends AbstractAPI {
 			Logger.warning(se.getMessage());
 		}
 		Logger.debug(String.format("generated access token is : %s", accessToken));
-		
+
 		injectCookies("uid", ((Integer)uid).toString());
 		injectCookies("accesstoken", accessToken);
-		
+
 		return accessToken;
 	}
 
@@ -83,32 +83,33 @@ public class Login extends AbstractAPI {
 		return accessToken;  
 	}  
 
-	private int createSessionRecord(Connection conn, String userName, String accessToken) throws NamingException, IOException {
+	private int createOrUpdateSessionRecord(Connection conn, int uid, String accessToken) throws NamingException, IOException {
 
-		String sqlGetUid = String.format(SQLStatements.S_GET_USER_ID_BY_NAME,userName);
+
+		String getAccessToken = String.format(SQLStatements.S_GET_ACCESSTOKEN_BY_UID,uid);
 		try {
-			ResultSet rs = DBconnector.DBQuery(conn,sqlGetUid);
+			//				Connection conn = DBconnector.getConnection();
+			ResultSet rs = DBconnector.DBQuery(conn,getAccessToken);
 
-			if (rs == null)
-				return -1;
-
-			int uid = 0;
-			if (rs.next())
-				uid = rs.getInt("user_id");
-			rs.close();
-			Logger.debug(String.format("sql [%s] executed and get the result: %s",sqlGetUid, uid));
-
-			String sqlCreateSession = String.format(SQLStatements.I_SESSION_RECORD,uid,accessToken);
-			DBconnector.DBUpdate(conn,sqlCreateSession);
-
+			if (rs == null) {
+				// creat a session record when the user firstly log in
+				String sqlCreateSession = String.format(SQLStatements.I_SESSION_RECORD,uid,accessToken);
+				DBconnector.DBUpdate(conn,sqlCreateSession);
+			}
+			else {
+				// update the already accesstoken and last updated time stamp
+				String updateAccessToken = String.format(SQLStatements.U_SESSION_RECORD,accessToken,uid);
+				DBconnector.DBUpdate(conn,updateAccessToken);
+				rs.close();
+			}
 		}
 		catch (SQLException se) {
 			Logger.warning(se.getMessage());
 			return -1;
 		}
+
 		return 0;
 
-
 	}
-
 }
+
