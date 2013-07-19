@@ -21,6 +21,7 @@ public class GetCommunities extends AbstractAPI {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Community> getLatest10Notices() throws IOException, NamingException {
+		allowCORS();
 		Logger.info(getSelfInfo());
 		try {
 			Connection conn = DBconnector.getConnection();

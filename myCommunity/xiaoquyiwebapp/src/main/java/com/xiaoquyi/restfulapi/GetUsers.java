@@ -24,6 +24,7 @@ public class GetUsers extends AbstractAPI {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<User> getUsers() throws IOException, SQLException, NamingException {
+		allowCORS(); 
 		Logger.info(getSelfInfo());
 		
 //		Object re = DBconnector.executeSqlStatement(SQLStatements.S_GET_USERS);

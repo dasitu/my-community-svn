@@ -61,12 +61,10 @@ public class DBconnector {
 	public static int DBUpdate(Connection conn,String sqlStatement) throws SQLException, IOException{
 		if (conn == null)
 			return -1;
-        Statement stat = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         int id = 0;
         try{
-            stat = conn.createStatement();
             ps = conn.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);  
             ps.executeUpdate();
             rs = ps.getGeneratedKeys();
