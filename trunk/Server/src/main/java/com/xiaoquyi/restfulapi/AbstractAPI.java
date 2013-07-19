@@ -115,20 +115,12 @@ public class AbstractAPI {
 		Date la = DateFormat.getDateTimeInstance().parse(lastAccess.toString());
 		long laInSecond = la.getTime();
 		
-		Logger.debug("current time  " + new Date().toString());
-		Logger.debug("last access time " + lastAccess.toString());
-		
-		Logger.debug("current time in long " + (Long)(currentTime));
-		Logger.debug("last access time in long " + (Long)(laInSecond));
-		
-		Logger.debug("current time compare to last access " + (Long)(currentTime-laInSecond));
-		
 		if (accessToken.equals(accessTokenInCookie) && currentTime-laInSecond<Miscellaneous.SESSION_EXPIRED_TIME) {
 			
 			return true;
 		}
+		
 		return false;
-			
 	}
 	
 	protected void allowCORS() throws IOException {
