@@ -17,17 +17,20 @@ public class Login extends AbstractAPI {
 	public String login(@QueryParam("username") String userName,
 			@QueryParam("password") String passwd) throws NamingException, IOException  {
 		allowCORS(); 
-		String sqlGetPasswd = String.format(SQLStatements.S_GET_PASSWD_BY_NAME,userName);
+		String sqlGetPasswd = String.format(SQLStatements.S_GET_ACCESSTOKEN_BY_UID,userName);
 		
 
 
 		String accessToken = "-1";
+		int uid = -1;
 		try {
 			String PassInDB = null;
 			Connection conn = DBconnector.getConnection();
 			ResultSet rs = DBconnector.DBQuery(conn, sqlGetPasswd);
-			if (rs.next())
+			if (rs.next()) {
 				PassInDB = rs.getString("user_pass");
+				uid = rs.getInt("user_id");
+			}
 			rs.close();
 			Logger.debug(String.format("sql [%s] executed and get the result: %s",sqlGetPasswd, PassInDB));
 			Logger.debug(String.format("Password from user is %s", passwd));
@@ -42,6 +45,10 @@ public class Login extends AbstractAPI {
 			Logger.warning(se.getMessage());
 		}
 		Logger.debug(String.format("generated access token is : %s", accessToken));
+		
+		injectCookies("uid", ((Integer)uid).toString());
+		injectCookies("accesstoken", accessToken);
+		
 		return accessToken;
 	}
 
@@ -91,7 +98,7 @@ public class Login extends AbstractAPI {
 			rs.close();
 			Logger.debug(String.format("sql [%s] executed and get the result: %s",sqlGetUid, uid));
 
-			String sqlCreateSession = String.format(SQLStatements.I_SESSION_RECORD,uid,accessToken,Miscellaneous.getCurrentTimestamp());
+			String sqlCreateSession = String.format(SQLStatements.I_SESSION_RECORD,uid,accessToken);
 			DBconnector.DBUpdate(conn,sqlCreateSession);
 
 		}

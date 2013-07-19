@@ -11,6 +11,9 @@ public class SQLStatements {
 	public static final String S_GET_COMMUNITIES = "select * from community_view;";
 	
 	
+	public static final String S_GET_ACCESSTOKEN_BY_UID = "select * from session_table where user_name='%s';";
+	
+	
 	// The column order is user_id,user_name,user_password,user_weibo,user_email,visialbe and timestamp.
 	public static final String I_USER_REGISTERING = "INSERT INTO user_table VALUES (0,'%s','%s','%s','%s','%s',%s,CURRENT_TIMESTAMP);";
 	
@@ -20,6 +23,6 @@ public class SQLStatements {
 	// The column order is imag_id,info_id,imag_url and timestamp.
 	public static final String I_NOTICE_IMAGE = "INSERT INTO image_table VALUES (0, %s,'%s',CURRENT_TIMESTAMP);";
 	
-	public static final String I_SESSION_RECORD = "INSERT INTO session_table VALUES (0, %s, '%s','%s');";
+	public static final String I_SESSION_RECORD = "INSERT INTO session_table VALUES (0, %s, '%s',CURRENT_TIMESTAMP);";
 	
 }

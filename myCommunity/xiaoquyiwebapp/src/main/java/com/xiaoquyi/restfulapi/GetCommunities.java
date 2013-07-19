@@ -24,6 +24,8 @@ public class GetCommunities extends AbstractAPI {
 		allowCORS();
 		Logger.info(getSelfInfo());
 		try {
+			if (!accessTokenValidation())
+				return null;
 			Connection conn = DBconnector.getConnection();
 			ResultSet rs = DBconnector.DBQuery(conn,SQLStatements.S_GET_COMMUNITIES);
 
@@ -56,7 +58,7 @@ public class GetCommunities extends AbstractAPI {
 			return list;
 
 		}
-		catch (SQLException e) {
+		catch (Exception e) {
 			return null;
 		}
 		
