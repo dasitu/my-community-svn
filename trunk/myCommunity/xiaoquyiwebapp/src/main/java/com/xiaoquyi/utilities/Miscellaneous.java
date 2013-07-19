@@ -13,9 +13,12 @@ public class Miscellaneous {
 	public static final String IMAGE_REPOSITORY = ROOT_PATH + IMAGE_FOLDER;
 	public final static String LOG_FILE_NAME = "./tomcat/logs/API_access.log";
 	
+	// this SESSION_EXPIRED_TIME is in millisecond, 60000 means 1 minute
+	public final static long SESSION_EXPIRED_TIME = 60000;
+	
 	
 	public static String getCurrentTimestamp() {
-		return new Timestamp((new Date()).getTime()).toString();
+		return new Timestamp(new Date().getTime()).toString();
 	}
 	
 	public static long getCurrentTimeInSeconds() {
