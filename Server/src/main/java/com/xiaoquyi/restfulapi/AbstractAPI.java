@@ -72,6 +72,8 @@ public class AbstractAPI {
 	protected boolean accessTokenValidation() throws ParseException, NamingException, IOException {
 //		String at = httpServletRequest.getParameter("accesstoken");
 		Cookie[] cookie = httpServletRequest.getCookies();
+		if (cookie == null)
+			return false;
 		String accessTokenInCookie = null;
 		String uid = null;
 		String accessToken = null;
