@@ -16,35 +16,9 @@ public class DBconnector {
 		return conn;
 	}
 
-//	public static Object executeSqlStatement(String sqlStatement) throws NamingException, IOException {
-//		Logger.debug(sqlStatement);
-//		Object re = null;
-//		try {
-//			Connection conn = getConnection();
-//
-//
-//			Statement st = conn.createStatement();
-//			if (sqlStatement.startsWith("select")) {
-//				re =  st.executeQuery(sqlStatement); //ResultSet type returned
-//			}
-//			else {
-//				re = st.executeUpdate(sqlStatement);// int type returned
-//			}
-//			//			conn.close();
-//			return re;
-//		} 
-//		catch(SQLException sqle) {
-//			Logger.info(sqle.getMessage());
-//			return -1;
-//		}	
-//
-//
-//
-//	}
 
 	public static ResultSet DBQuery(Connection conn,String sqlStatement) throws SQLException, IOException{
 		if (conn == null) {
-			Logger.warning("DB connection is null");
 			return null;
 		}
 		try {
@@ -52,6 +26,7 @@ public class DBconnector {
 		}
 		catch (IOException e) {
 			//Do nothing
+			Logger.warning(e.getMessage());
 		}
 		Statement st = conn.createStatement();
 		return st.executeQuery(sqlStatement); 

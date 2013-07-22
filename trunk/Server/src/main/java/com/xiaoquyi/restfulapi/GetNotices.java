@@ -20,12 +20,12 @@ public class GetNotices extends AbstractAPI{
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Element> getLatest10Notices() throws IOException, NamingException, SQLException, ParseException {
+	public List<Notice> getLatest10Notices() throws IOException, NamingException, SQLException, ParseException {
 		allowCORS(); 
-		List<Element> list = new LinkedList<Element>();
+		List<Notice> list = new LinkedList<Notice>();
 		if (!accessTokenValidation()) {
 			Logger.info("access token expired!");
-			list.add(new Status(10000,-1,"access token expired!",10000));
+//			list.add(new Status(10000,-1,"access token expired!",10000));
 			return list;
 		}
 		Logger.info(getSelfInfo());

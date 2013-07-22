@@ -10,8 +10,8 @@ public class Miscellaneous {
 	public static final String IMAGE_REPOSITORY = ROOT_PATH + IMAGE_FOLDER;
 	public final static String LOG_FILE_NAME = "./tomcat/logs/API_access.log";
 	
-	// this SESSION_EXPIRED_TIME is in millisecond, 60000 means 1 minute
-	public final static long SESSION_EXPIRED_TIME = 60000;
+	// this SESSION_EXPIRED_TIME is in millisecond, 2592000000 means 30 days
+	public final static long SESSION_EXPIRED_TIME = 2592000000L;
 	
 	
 	public static String getCurrentTimestamp() {
