@@ -1,19 +1,19 @@
 package com.xiaoquyi.jsonelements;
 
-import javax.xml.bind.annotation.XmlRootElement;
 
+import com.sun.xml.txw2.annotation.XmlElement;
 
-@XmlRootElement  
-public class Status  extends Element  {
+@XmlElement
+public class Status {
 
-	public int errcode;
-	public int ret;
-	public String msg;
-	public int seqid;
+	public int errcode = 0;
+	public int ret = 0;
+	public String msg = "ok";
+	public int seqid = 0;
 
 	public Status() {};
-
-	public Status(int errcode,
+	
+	public void setStatus(int errcode,
 			int ret,
 			String msg,
 			int seqid) {

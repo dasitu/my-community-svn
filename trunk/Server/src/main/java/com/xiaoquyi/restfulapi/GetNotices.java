@@ -9,9 +9,7 @@ import javax.naming.NamingException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-import com.xiaoquyi.jsonelements.Element;
-import com.xiaoquyi.jsonelements.Notice;
-import com.xiaoquyi.jsonelements.Status;
+import com.xiaoquyi.jsonelements.Notices;
 import com.xiaoquyi.utilities.*;
 
 
@@ -20,13 +18,13 @@ public class GetNotices extends AbstractAPI{
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Notice> getLatest10Notices() throws IOException, NamingException, SQLException, ParseException {
+	public Notices getLatest10Notices() throws IOException, NamingException, SQLException, ParseException {
 		allowCORS(); 
-		List<Notice> list = new LinkedList<Notice>();
+		Notices data = new Notices();
 		if (!accessTokenValidation()) {
 			Logger.info("access token expired!");
-//			list.add(new Status(10000,-1,"access token expired!",10000));
-			return list;
+			data.setStatus(10000, -1, "access token expired!", 10000);
+			return data;
 		}
 		Logger.info(getSelfInfo());
 		
@@ -40,7 +38,7 @@ public class GetNotices extends AbstractAPI{
 				String poster = rs.getString("user_name");
 				Timestamp publishTime = rs.getTimestamp("info_last_update");
 				Logger.debug(content+ " " + title + " " + publishTime.toString());
-				Notice item = new Notice(title,content,poster,publishTime.toString());
+				Notices.Notice item = new Notices().new Notice(title,content,poster,publishTime.toString());
 				String sqlGetImages = String.format(SQLStatements.S_INFO_IMAGES, rs.getInt("info_id"));
 				ResultSet images = DBconnector.DBQuery(conn,sqlGetImages);
 				while(images.next()) {
@@ -48,15 +46,16 @@ public class GetNotices extends AbstractAPI{
 					item.addImage(images.getString("imag_url"));
 				}
 				images.close();
-				list.add(item);			
+				data.addNotice(item);		
 			}
 			rs.close();
 			conn.close();
-			return list;
+			return data;
 
 		}
 		catch (SQLException e) {
 			Logger.error(e.getMessage());
+			data.setStatus(10000, -1, e.getMessage(), 10000);
 			return null;
 		}
 		
