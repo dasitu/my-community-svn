@@ -2,6 +2,7 @@ package com.xiaoquyi.restfulapi;
 
 import java.io.IOException;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.*;
 
 import javax.naming.NamingException;
@@ -18,16 +19,17 @@ public class GetCommunities extends AbstractAPI {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Element> getLatest10Notices() throws IOException, NamingException {
+	public List<Element> getLatest10Notices() throws IOException, NamingException, ParseException {
 		allowCORS();
 		Logger.info(getSelfInfo());
+		List<Element> list = new LinkedList<Element>();
+		if (!accessTokenValidation()) {
+			Logger.info("access token expired!");
+			list.add(new Status(10000,-1,"access token expired!",10000));
+			return list;
+		}
 		try {
-			List<Element> list = new LinkedList<Element>();
-			if (!accessTokenValidation()) {
-				Logger.info("access token expired!");
-				list.add(new Status(10000,-1,"access token expired!",10000));
-				return list;
-			}
+			
 			Connection conn = DBconnector.getConnection();
 			ResultSet rs = DBconnector.DBQuery(conn,SQLStatements.S_GET_COMMUNITIES);
 

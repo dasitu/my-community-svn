@@ -42,10 +42,11 @@ public class DBconnector {
 //
 //	}
 
-	public static ResultSet DBQuery(Connection conn,String sqlStatement) throws SQLException{
-
-		if (conn == null)
+	public static ResultSet DBQuery(Connection conn,String sqlStatement) throws SQLException, IOException{
+		if (conn == null) {
+			Logger.warning("DB connection is null");
 			return null;
+		}
 		try {
 			Logger.debug(sqlStatement);
 		}
@@ -59,6 +60,7 @@ public class DBconnector {
 
 
 	public static int DBUpdate(Connection conn,String sqlStatement) throws SQLException, IOException{
+		Logger.debug(sqlStatement);
 		if (conn == null)
 			return -1;
         PreparedStatement ps = null;

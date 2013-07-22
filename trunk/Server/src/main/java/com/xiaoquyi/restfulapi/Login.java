@@ -24,20 +24,20 @@ public class Login extends AbstractAPI {
 		String accessToken = "-1";
 		int uid = -1;
 		try {
-			String PassInDB = null;
+			String passInDB = null;
 			Connection conn = DBconnector.getConnection();
 			ResultSet rs = DBconnector.DBQuery(conn, sqlGetPasswd);
 			if (rs.next()) {
-				PassInDB = rs.getString("user_pass");
+				passInDB = rs.getString("user_pass");
 				uid = rs.getInt("user_id");
 			}
 			rs.close();
-			Logger.debug(String.format("sql [%s] executed and get the result: %s",sqlGetPasswd, PassInDB));
+			Logger.debug(String.format("sql [%s] executed and get the result: %s",sqlGetPasswd, passInDB));
 			Logger.debug(String.format("Password from user is %s", passwd));
-			if (PassInDB!=null && PassInDB.equals(passwd)) {
+			if (passInDB!=null && passInDB.equals(passwd)) {
 				getHttpSession().setAttribute("username", userName);
 				accessToken = generateAccessToken(userName + Miscellaneous.getCurrentTimestamp());
-				createOrUpdateSessionRecord(conn, uid,accessToken);
+				createOrUpdateSessionRecord(conn, uid, accessToken);
 			}
 			conn.close();
 		}
@@ -90,8 +90,7 @@ public class Login extends AbstractAPI {
 		try {
 			//				Connection conn = DBconnector.getConnection();
 			ResultSet rs = DBconnector.DBQuery(conn,getAccessToken);
-
-			if (rs == null) {
+			if (!rs.next()){
 				// creat a session record when the user firstly log in
 				String sqlCreateSession = String.format(SQLStatements.I_SESSION_RECORD,uid,accessToken);
 				DBconnector.DBUpdate(conn,sqlCreateSession);
@@ -100,8 +99,8 @@ public class Login extends AbstractAPI {
 				// update the already accesstoken and last updated time stamp
 				String updateAccessToken = String.format(SQLStatements.U_SESSION_RECORD,accessToken,uid);
 				DBconnector.DBUpdate(conn,updateAccessToken);
-				rs.close();
 			}
+			rs.close();
 		}
 		catch (SQLException se) {
 			Logger.warning(se.getMessage());

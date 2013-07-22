@@ -1,4 +1,6 @@
 package com.xiaoquyi.jsonelements;
+import java.util.*;
+
 import javax.xml.bind.annotation.*;
 
 @XmlRootElement   
@@ -7,20 +9,26 @@ public class Notice extends Element {
 	public String title = "";
 	public String content = "";
 	public String publishTime = "";
-	public String images = "";
+	public List<String> images = null;
+	public String poster = "";
 	
 	public Notice() {};
 	
 	public Notice(String title,
 				  String content,
-				  String publishTime,
-				  String images) {
+				  String poster,
+				  String publishTime) {
 		
 		this.title = title;
 		this.content = content;
 		this.publishTime = publishTime;
-		this.images = images;
+		this.poster = poster;
 	}
 	
-	
+	public void addImage(String image){
+		if (this.images == null)
+			this.images = new LinkedList<String>();
+		this.images.add(image);
+		
+	}
 }

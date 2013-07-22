@@ -37,7 +37,7 @@ public class PostNotice extends AbstractAPI{
 	public Response uploadFile(
 			@FormDataParam("title") String title,
 			@FormDataParam("content") String content,
-			@FormDataParam("uid") String uid,
+			@FormDataParam("uid") String uid, //TODO:get this value from cookie
 			@FormDataParam("communityID") String communityID,
 			@FormDataParam("visiable") String visiable,
 			@FormDataParam("file") List<FormDataBodyPart> dataBodies) throws IOException, SQLException, NamingException {
