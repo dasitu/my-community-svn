@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.naming.NamingException;
 import javax.ws.rs.*;
