@@ -129,6 +129,8 @@ public class AbstractAPI {
 		httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
 		httpServletResponse.addHeader("Access-Control-Allow-Headers", "origin,x-requested-with,Content-Type");
 		httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+		
+		httpServletResponse.setContentType ("text/html;charset=utf-8");
 	}
 	
 	protected void injectCookies(String name, String value) {

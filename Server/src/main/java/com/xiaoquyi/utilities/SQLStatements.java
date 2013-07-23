@@ -15,6 +15,8 @@ public class SQLStatements {
 	
 	public static final String S_GET_USERS = "select * from user_table;";
 	
+	public static final String S_GET_COMMUNITIES_BY_UID = "select T2.comm_name from mapping_table T1,community_table T2 where T1.user_id=%s and T1.comm_id = T2.comm_id;";
+	
 	public static final String S_GET_COMMUNITIES = "select * from community_view;";
 	
 	
