@@ -6,16 +6,16 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement   
 public class Notices extends Status {
 	
-//	@XmlElement
-	public class Notice {
+	@XmlRootElement
+	static public class Notice {
 		public String title = "";
 		public String content = "";
 		public String publishTime = "";
 		public List<String> images = null;
-		public String poster = "";
+		public String poster = ""; 
 		
-//		public Notice() {};
-//		
+		public Notice() {};
+	
 		public Notice(String title,
 					  String content,
 					  String poster,
@@ -35,7 +35,7 @@ public class Notices extends Status {
 		}
 		
 	}
-
+	@XmlElement
 	public List<Notice> data = null;
 	
 	
@@ -46,5 +46,6 @@ public class Notices extends Status {
 			this.data = new LinkedList<Notice>();
 		}
 		this.data.add(item);
+		
 	}
 }

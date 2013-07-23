@@ -9,7 +9,7 @@ import javax.naming.NamingException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-import com.xiaoquyi.jsonelements.*;
+import com.xiaoquyi.jsonelements.Community;
 import com.xiaoquyi.utilities.*;
 
 
@@ -19,13 +19,13 @@ public class GetCommunities extends AbstractAPI {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Element> getLatest10Notices() throws IOException, NamingException, ParseException {
+	public List<Community> getLatest10Notices() throws IOException, NamingException, ParseException {
 		allowCORS();
 		Logger.info(getSelfInfo());
-		List<Element> list = new LinkedList<Element>();
+		List<Community> list = new LinkedList<Community>();
 		if (!accessTokenValidation()) {
 			Logger.info("access token expired!");
-			list.add(new Status(10000,-1,"access token expired!",10000));
+//			list.add(new Status(10000,-1,"access token expired!",10000));
 			return list;
 		}
 		try {

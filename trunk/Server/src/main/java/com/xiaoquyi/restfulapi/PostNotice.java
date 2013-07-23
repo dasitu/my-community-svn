@@ -54,6 +54,8 @@ public class PostNotice extends AbstractAPI{
 		
 		
 		String addImage = null;
+		if (dataBodies == null)
+			return Response.status(200).entity("dfsfds").build();
 		for(FormDataBodyPart dataBody:dataBodies) {
 
 			String fileName = dataBody.getContentDisposition().getFileName();

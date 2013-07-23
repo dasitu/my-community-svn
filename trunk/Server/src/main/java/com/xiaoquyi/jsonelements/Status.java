@@ -1,9 +1,10 @@
 package com.xiaoquyi.jsonelements;
 
 
-import com.sun.xml.txw2.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlElement
+
+@XmlRootElement
 public class Status {
 
 	public int errcode = 0;
