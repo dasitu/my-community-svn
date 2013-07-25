@@ -14,7 +14,7 @@ public class Status {
 
 	public Status() {};
 	
-	public void setStatus(int errcode,
+	public Status(int errcode,
 			int ret,
 			String msg,
 			int seqid) {

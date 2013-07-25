@@ -46,6 +46,8 @@ public class AbstractAPI {
 	@Context
 	HttpServletResponse httpServletResponse;
 	
+	String uid = null;
+	String accessTokenInCookie = null;
 	
 	public String getSelfInfo() {
 		StackTraceElement currentElement = (new Throwable()).getStackTrace()[1];
@@ -70,24 +72,11 @@ public class AbstractAPI {
 	}
 	
 	protected boolean accessTokenValidation() throws ParseException, NamingException, IOException {
-//		String at = httpServletRequest.getParameter("accesstoken");
-		Cookie[] cookie = httpServletRequest.getCookies();
-		if (cookie == null)
-			return false;
-		String accessTokenInCookie = null;
-		String uid = null;
+
 		String accessToken = null;
 		Timestamp lastAccess = null;
-		for (int i=0;i<cookie.length;i++) {
-			if (cookie[i].getName().equals("accesstoken"))
-				accessTokenInCookie = cookie[i].getValue();
-			if (cookie[i].getName().equals("uid"))
-				uid = cookie[i].getValue();
-		}
 		
-		Logger.debug("accessTokenInCookie = " + accessTokenInCookie);
-		Logger.debug("uid = " + uid);
-		if (accessTokenInCookie == null || uid == null)
+		if (!getUidAndAccessTokenFromCookies())
 			return false;
 		
 		String getAccessToken = String.format(SQLStatements.S_GET_ACCESSTOKEN_BY_UID,uid);
@@ -117,7 +106,10 @@ public class AbstractAPI {
 		Date la = DateFormat.getDateTimeInstance().parse(lastAccess.toString());
 		long laInSecond = la.getTime();
 		
-		if (accessToken.equals(accessTokenInCookie) && currentTime-laInSecond<Miscellaneous.SESSION_EXPIRED_TIME) {
+		long timeGap = currentTime-laInSecond;
+		Logger.debug(String.format("Time gap = %s", timeGap));
+		
+		if (accessToken.equals(accessTokenInCookie) && timeGap<Miscellaneous.SESSION_EXPIRED_TIME) {
 			
 			return true;
 		}
@@ -133,8 +125,38 @@ public class AbstractAPI {
 		httpServletResponse.setContentType ("text/html;charset=utf-8");
 	}
 	
+	
 	protected void injectCookies(String name, String value) {
 		httpServletResponse.addCookie(new Cookie(name,value));
+	}
+	
+	protected boolean getUidAndAccessTokenFromCookies() throws IOException {
+		Cookie[] cookie = httpServletRequest.getCookies();
+		if (cookie == null)
+			return false;
+
+		for (int i=0;i<cookie.length;i++) {
+			if (cookie[i].getName().equals("accesstoken"))
+				accessTokenInCookie = cookie[i].getValue();
+			if (cookie[i].getName().equals("uid"))
+				uid = cookie[i].getValue();
+		}
+		
+		Logger.debug("accessTokenInCookie = " + accessTokenInCookie);
+		Logger.debug("uid = " + uid);
+		if (accessTokenInCookie == null || uid == null)
+			return false;
+		return true;
+	}
+	
+	
+	
+	public String getUid() {
+		return uid;
+	}
+	
+	public String getAccessToken() {
+		return accessTokenInCookie;
 	}
 	
 }

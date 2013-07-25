@@ -10,6 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 import com.xiaoquyi.jsonelements.Notices;
+import com.xiaoquyi.jsonelements.Status;
 import com.xiaoquyi.utilities.*;
 
 
@@ -22,8 +23,8 @@ public class GetNotices extends AbstractAPI{
 		allowCORS(); 
 		Notices data = new Notices();
 		if (!accessTokenValidation()) {
-			Logger.info("access token expired!");
-			data.setStatus(10000, -1, "access token expired!", 10000);
+			Logger.info("Access token error or expired!");
+			data.setStatus(new Status(10000, -1, "Access token error or expired!", 10000));
 			return data;
 		}
 		Logger.info(getSelfInfo());
@@ -50,12 +51,13 @@ public class GetNotices extends AbstractAPI{
 			}
 			rs.close();
 			conn.close();
+			data.setStatus(new Status());
 			return data;
 
 		}
 		catch (SQLException e) {
 			Logger.error(e.getMessage());
-			data.setStatus(10000, -1, e.getMessage(), 10000);
+			data.setStatus(new Status(10000, -1, e.getMessage(), 10000));
 			return null;
 		}
 		

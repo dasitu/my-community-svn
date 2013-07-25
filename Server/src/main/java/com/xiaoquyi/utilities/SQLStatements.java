@@ -4,10 +4,6 @@ public class SQLStatements {
 	public static final String S_LATSED_10_INFO = 
 			"select T1.info_id,T1.info_text,T1.info_title,T1.info_last_update,T2.user_name from infor_table T1,user_table T2 where T1.user_id=T2.user_id order by info_id desc limit 10;";
 	
-//	public static final String S_LATSED_10_INFO = "SELECT T1.info_text, T1.info_title, T1.info_last_update, T2.imag_url" + 
-//	"FROM infor_table T1, image_table T2" + 
-//	"WHERE T1.info_id = T2.info_id order by info_id desc limit 10;";
-	
 	public static final String S_INFO_IMAGES = "select imag_url from image_table where info_id=%s;";
 	
 	public static final String S_GET_PASSWD_BY_NAME = "select user_pass,user_id from user_table where user_name='%s';";
@@ -15,7 +11,7 @@ public class SQLStatements {
 	
 	public static final String S_GET_USERS = "select * from user_table;";
 	
-	public static final String S_GET_COMMUNITIES_BY_UID = "select T2.comm_name from mapping_table T1,community_table T2 where T1.user_id=%s and T1.comm_id = T2.comm_id;";
+	public static final String S_GET_COMMUNITIES_BY_UID = "select T2.* from mapping_table T1,community_view T2 where T1.user_id=%s and T1.comm_id = T2.comm_id;";
 	
 	public static final String S_GET_COMMUNITIES = "select * from community_view;";
 	
