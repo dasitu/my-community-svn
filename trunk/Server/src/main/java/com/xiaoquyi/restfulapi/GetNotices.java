@@ -3,7 +3,6 @@ package com.xiaoquyi.restfulapi;
 import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
-import java.util.*;
 
 import javax.naming.NamingException;
 import javax.ws.rs.*;
@@ -52,7 +51,7 @@ public class GetNotices extends AbstractAPI{
 			}
 			rs.close();
 			conn.close();
-			data.setStatus(new Status(10000, -1, "Status test", 10000));
+			data.setStatus(new Status());
 			return data;
 
 		}
