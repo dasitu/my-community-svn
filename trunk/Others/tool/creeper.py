@@ -103,7 +103,6 @@ def processCreeper(cursor, db):
     # 高新区
     idex = 1
     iNum = 3
-    iNum = 3
     area = '高新区'
     cursor.execute("insert into area_table values (%d, 1, '%s', CURRENT_TIMESTAMP)" %(iNum, area.decode('gbk').encode('utf-8')))
     for i in range(1, 28+1):
