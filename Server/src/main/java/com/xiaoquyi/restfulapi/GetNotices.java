@@ -9,6 +9,7 @@ import javax.naming.NamingException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
+import com.xiaoquyi.jsonelements.Notice;
 import com.xiaoquyi.jsonelements.Notices;
 import com.xiaoquyi.jsonelements.Status;
 import com.xiaoquyi.utilities.*;
@@ -36,10 +37,10 @@ public class GetNotices extends AbstractAPI{
 			while (rs.next()) {
 				String content = rs.getString("info_text");
 				String title = rs.getString("info_title");
-				String poster = rs.getString("user_name");
+				String poster = rs.getString("user_name"); // the poster
 				Timestamp publishTime = rs.getTimestamp("info_last_update");
 				Logger.debug(content+ " " + title + " " + publishTime.toString());
-				Notices.Notice item = new Notices.Notice(title,content,poster,publishTime.toString());
+				Notice item = new Notice(title,content,poster,publishTime.toString());
 				String sqlGetImages = String.format(SQLStatements.S_INFO_IMAGES, rs.getInt("info_id"));
 				ResultSet images = DBconnector.DBQuery(conn,sqlGetImages);
 				while(images.next()) {
@@ -51,7 +52,7 @@ public class GetNotices extends AbstractAPI{
 			}
 			rs.close();
 			conn.close();
-			data.setStatus(new Status());
+			data.setStatus(new Status(10000, -1, "Status test", 10000));
 			return data;
 
 		}

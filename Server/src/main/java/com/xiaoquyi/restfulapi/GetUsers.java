@@ -12,6 +12,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 import com.xiaoquyi.jsonelements.Status;
+import com.xiaoquyi.jsonelements.User;
 import com.xiaoquyi.jsonelements.Users;
 import com.xiaoquyi.utilities.DBconnector;
 import com.xiaoquyi.utilities.LoadElements;
@@ -51,7 +52,7 @@ public class GetUsers extends AbstractAPI {
 				String email = rs.getString("user_email");
 				Timestamp lastAccess = rs.getTimestamp("user_last_update");
 				Logger.debug(name+ " " + weibo + " " + qq + " " +  email + " " +  lastAccess.toString());
-				Users.User user = new Users.User(name,weibo,qq,email,lastAccess.toString());
+				User user = new User(name,weibo,qq,email,lastAccess.toString());
 				String sqlGetCommunities = String.format(SQLStatements.S_GET_COMMUNITIES_BY_UID,rs.getString("user_id"));
 				ResultSet communities = DBconnector.DBQuery(conn,sqlGetCommunities);
 //				while(communities.next()) {
