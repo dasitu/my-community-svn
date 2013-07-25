@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 @XmlRootElement   
-public class Users  extends Status {
+public class Users  extends Element {
 
 	public static class User {
 		public String name = "";
@@ -16,7 +16,7 @@ public class Users  extends Status {
 		public String qq = "";
 		public String email = "";
 		public String lastAccess = "";
-		public List<String> communities = null;
+		public List<Community> communities = null;
 
 		public User() {};
 
@@ -33,11 +33,15 @@ public class Users  extends Status {
 			this.lastAccess = lastAccess;
 		}
 		
-		public List<String> addCommunity(String community) {
+		public List<Community> addCommunity(Community community) {
 			if (communities == null)
-				communities = new LinkedList<String>();
+				communities = new LinkedList<Community>();
 			communities.add(community);
 			return communities;
+		}
+		
+		public void setCommunities(List<Community> communities) {
+			this.communities = communities;
 		}
 	}
 	@XmlElement

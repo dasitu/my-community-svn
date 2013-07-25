@@ -4,7 +4,7 @@ import java.util.*;
 import javax.xml.bind.annotation.*;
 
 @XmlRootElement   
-public class Notices extends Status {
+public class Notices extends Element {
 	
 	@XmlRootElement
 	static public class Notice {

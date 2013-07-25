@@ -4,8 +4,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 @XmlRootElement   
-public class Community extends Status{
-
+public class Community extends Element{
+	
 	public String province = "";
 	public String city = "";
 	public String area = "";
@@ -32,6 +32,4 @@ public class Community extends Status{
 		this.active = active;
 		this.lastAcess = lastAcess;
 	}
-	
-	
 }
