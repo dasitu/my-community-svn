@@ -32,4 +32,7 @@ public class SQLStatements {
 	
 	public static final String U_SESSION_RECORD = "UPDATE session_table SET sess_access_token='%s',sess_last_updated=CURRENT_TIMESTAMP where user_id=%s;";
 	
+	//The column order is mapp_id,user_id,comm_id.
+	public static final String I_MAPPING_ITEM = "INSERT INTO mapping_table VALUES (0, %s, %s);";
+	
 }
