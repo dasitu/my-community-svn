@@ -16,6 +16,13 @@ public class DBconnector {
 		return conn;
 	}
 
+	/*
+	 * This method is used to execute a sql clause, which will query data from the DB was refereed in \a sqlStatement
+	 * 
+	 * @param conn The connection to the mysql DB
+	 * @param sqlStatement The sql clause to be executed
+	 * @return a ResultSet object that contains the data produced by the given query; never null 
+ 	 */
 
 	public static ResultSet DBQuery(Connection conn,String sqlStatement) throws SQLException, IOException{
 		if (conn == null) {
@@ -34,6 +41,14 @@ public class DBconnector {
 	}
 
 
+	/*
+	 * This method is used to execute a sql clause, which will insert into data or update existed data in DB 
+	 * 
+	 * @param conn The connection to the mysql DB
+	 * @param sqlStatement The sql clause to be executed
+	 * @return The new auto-generated key, usually the id column of the related table which was refereed in \a sqlStatement
+	 * if insert into was executed; 0 will be return if update clause executed; -1 indicate something goes wrong.   
+ 	 */
 	public static int DBUpdate(Connection conn,String sqlStatement) throws SQLException, IOException{
 		Logger.debug(sqlStatement);
 		if (conn == null)
@@ -46,13 +61,13 @@ public class DBconnector {
             ps.executeUpdate();
             rs = ps.getGeneratedKeys();
             if (rs.next()){
-                id = rs.getInt(1);
+                return rs.getInt(1);
             }
             return id;
         }catch(Exception e){
            Logger.error(e.getMessage());
+           return -1;
         }
-        return -1;
 
 	}
 

@@ -34,17 +34,28 @@ public class PostNotice extends AbstractAPI{
 
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public Response uploadFile(
+	/*This interface accept the http POST request to post a new notice. API address: The \b /post_notice 
+	 * 
+	 * @param title The notice's title
+	 * @param content The notice's content
+	 * @param uid The poster id
+	 * @param communityID The notice related community's id
+	 * @param visible To control if this notice is visible for all user,optional, default to 1 indicate all user can see the notice
+	 * @param dataBodies The files to be upload with the notice, usually some pictures
+	 * @return One instance of \a Status which indicate the status of this post action, contain the error code and text message
+	 */
+	
+	public Response getPost(
 			@FormDataParam("title") String title,
 			@FormDataParam("content") String content,
 			@FormDataParam("uid") String uid, //TODO:get this value from cookie
 			@FormDataParam("communityID") String communityID,
-			@FormDataParam("visiable") String visiable,
+			@DefaultValue("1") @FormDataParam("visible") String visible,
 			@FormDataParam("file") List<FormDataBodyPart> dataBodies) throws IOException, SQLException, NamingException {
 		allowCORS();
 		// The column order is info_id,user_id,comminity_id,info_text,info_visible,info_last_update and info_title.
 		
-		String newNotice = String.format(SQLStatements.I_POST_NOTICE, uid, communityID,content,visiable,title);
+		String newNotice = String.format(SQLStatements.I_POST_NOTICE, uid, communityID,content,visible,title);
 		
 		Connection conn = DBconnector.getConnection();
 		int noticeId = DBconnector.DBUpdate(conn, newNotice);

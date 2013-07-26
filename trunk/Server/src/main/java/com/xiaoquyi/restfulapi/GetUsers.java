@@ -25,6 +25,12 @@ public class GetUsers extends AbstractAPI {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
+	
+	/*This interface accept the http GET request to get registered user's information. API address: The \b /get_users 
+	 * 
+	 *@return One instance of \a Users have a number of user information which in the form of json list
+	 */
+	
 	public Users getUsers() throws IOException, SQLException, NamingException, ParseException {
 		allowCORS(); 
 		Logger.info(getSelfInfo());
@@ -55,11 +61,6 @@ public class GetUsers extends AbstractAPI {
 				User user = new User(name,weibo,qq,email,lastAccess.toString());
 				String sqlGetCommunities = String.format(SQLStatements.S_GET_COMMUNITIES_BY_UID,rs.getString("user_id"));
 				ResultSet communities = DBconnector.DBQuery(conn,sqlGetCommunities);
-//				while(communities.next()) {
-//					Community comm = new Community();
-//					Logger.debug(communities.getString("comm_name"));
-//					user.addCommunity(communities.getString("comm_name"));
-//				}
 				user.setCommunities(LoadElements.loadCommunities(communities));
 				communities.close();
 				users.addUser(user);			

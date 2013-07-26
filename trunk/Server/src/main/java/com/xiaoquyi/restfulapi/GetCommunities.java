@@ -36,28 +36,7 @@ public class GetCommunities extends AbstractAPI {
 			if (rs == null) {
 				return list;
 			}
-
-//			List<Element> list = new LinkedList<Element>();
-//			while (rs.next()) {
-//				String province = rs.getString("prov_name");
-//				Logger.warning(province);
-//				String city = rs.getString("city_name");
-//
-//				String area = rs.getString("area_name");
-//				Logger.warning(province);
-//				String name = rs.getString("comm_name");
-//
-//				String address = rs.getString("comm_address");
-//
-//				int active = rs.getInt("comm_active");
-//
-//
-//				Timestamp lastAccess = rs.getTimestamp("comm_last_update");
-//				Logger.debug(province+ " " + city + " " + area + " " + name + " " + address
-//						+ " " + lastAccess.toString());
-//				Community item = new Community(province,city,area,address,name,active,lastAccess.toString());
-//				list.add(item);			
-//			}
+			
 			list = LoadElements.loadCommunities(rs);
 			rs.close();
 			conn.close();
