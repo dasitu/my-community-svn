@@ -21,9 +21,7 @@ public class UserRegistering extends AbstractAPI {
 	}
 	
 
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	/* The interface is used to accept a user registering request and do the follow registering steps,
+	/** @brief The interface is used to accept a user registering request and do the follow registering steps,
 	 * insert user information into DB; The user information come from the http POST request, The API
 	 * address is \b /user_register
 	 * 
@@ -34,7 +32,10 @@ public class UserRegistering extends AbstractAPI {
 	 * @param qq The QQ number,optional, default to null.
 	 * @param communityID The id of the community the registering user living,optional, default to -1.
 	 * @param visible This parameter control the user if is visible to others,,optional, default to 1,means visible.
+	 * @return One instance of \ref jsonelements.Status which give you the result, successful or failed
 	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
 	public Status doRegister(@FormParam("username") String userName,
 			@FormParam("password") String passwd,
 			@DefaultValue("null") @FormParam("weibo") String weibo,
