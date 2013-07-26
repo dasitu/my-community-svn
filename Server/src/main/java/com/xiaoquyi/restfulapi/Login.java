@@ -14,16 +14,17 @@ import com.xiaoquyi.utilities.*;
 @Path("/login")
 public class Login extends AbstractAPI {
 
+	//TODO: Should using post here for security
+	/**This interface accept the http POST request to login. API address:\a /login
+	* 
+	* @param userName The account user name want to logged in
+	* @param passwd The password of the logging account
+	* @return One instance of \ref jsonelements.Status which indicate the status of this post action, 
+	* successful or not, contain the error code and text message
+	*/
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	//TODO: Should using post here for security
-	/*This interface accept the http POST request to login. API address:\a /login
-	 * 
-	 * @param userName The account user name want to logged in
-	 * @param passwd The password of the logging account
-	 * @return One instance of \a Status which indicate the status of this post action, 
-	 * successful or not, contain the error code and text message
-	 */
 	public String login(@QueryParam("username") String userName,
 			@QueryParam("password") String passwd) throws NamingException, IOException  {
 		allowCORS(); 

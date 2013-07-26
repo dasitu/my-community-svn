@@ -23,14 +23,12 @@ import com.xiaoquyi.utilities.SQLStatements;
 @Path("/get_users")
 public class GetUsers extends AbstractAPI {
 
+	/**This interface accept the http GET request to get registered user's information. API address: The \b /get_users 
+	 * 
+	 *@return One instance of \ref jsonelements.Users have a number of user information which in the form of json list
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	
-	/*This interface accept the http GET request to get registered user's information. API address: The \b /get_users 
-	 * 
-	 *@return One instance of \a Users have a number of user information which in the form of json list
-	 */
-	
 	public Users getUsers() throws IOException, SQLException, NamingException, ParseException {
 		allowCORS(); 
 		Logger.info(getSelfInfo());

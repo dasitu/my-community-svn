@@ -32,9 +32,7 @@ public class PostNotice extends AbstractAPI{
 
 	}
 
-	@POST
-	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	/*This interface accept the http POST request to post a new notice. API address: The \b /post_notice 
+	/**This interface accept the http POST request to post a new notice. API address: The \b /post_notice 
 	 * 
 	 * @param title The notice's title
 	 * @param content The notice's content
@@ -42,9 +40,10 @@ public class PostNotice extends AbstractAPI{
 	 * @param communityID The notice related community's id
 	 * @param visible To control if this notice is visible for all user,optional, default to 1 indicate all user can see the notice
 	 * @param dataBodies The files to be upload with the notice, usually some pictures
-	 * @return One instance of \a Status which indicate the status of this post action, contain the error code and text message
+	 * @return One instance of \ref jsonelements.Status which indicate the status of this post action, contain the error code and text message
 	 */
-	
+	@POST
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public Response getPost(
 			@FormDataParam("title") String title,
 			@FormDataParam("content") String content,

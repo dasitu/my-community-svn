@@ -19,9 +19,9 @@ public class GetNotices extends AbstractAPI{
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	/*This interface accept the http GET request to get latest 10 notices. API address: The \b /get_notices 
+	/**@brief This interface accept the http GET request to get latest 10 notices. API address: The \b /get_notices 
 	 * 
-	 *@return One instance of \a Notices have 10 latest notices which in the form of json list
+	 *@return One instance of \ref jsonelements.Notices have 10 latest notices which in the form of json list
 	 */
 	
 	public Notices getLatest10Notices() throws IOException, NamingException, SQLException, ParseException {
