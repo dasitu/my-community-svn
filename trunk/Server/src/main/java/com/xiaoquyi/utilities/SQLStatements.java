@@ -7,7 +7,7 @@ public class SQLStatements {
 	public static final String S_GET_INFO = 
 			"select T1.info_id,T3.comm_name,T1.info_text,T1.info_title,T1.info_last_update,T2.user_name " +
 			"from infor_table T1,user_table T2,community_table T3 " +
-			"where T1.user_id=T2.user_id and T1.comm_id=T3.comm_id %s order by info_id desc limit %s;";
+			"where T1.user_id=T2.user_id and T1.comm_id=T3.comm_id and T1.info_last_update %s order by info_id desc limit %s;";
 	// The column order is info_id,user_id,comminity_id,info_text,info_visible, info_title, info_last_update.
 	public static final String I_POST_NOTICE = "INSERT INTO infor_table VALUES (0, %s, %s, '%s',%s,'%s',CURRENT_TIMESTAMP);";
 	// The column order is imag_id,info_id,imag_url and timestamp.
