@@ -9,6 +9,7 @@ import javax.naming.NamingException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
+import com.xiaoquyi.jsonelements.Status;
 import com.xiaoquyi.utilities.*;
 
 @Path("/login")
@@ -25,12 +26,10 @@ public class Login extends AbstractAPI {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public String login(@QueryParam("username") String userName,
+	public Status login(@QueryParam("username") String userName,
 			@QueryParam("password") String passwd) throws NamingException, IOException  {
 		allowCORS(); 
 		String sqlGetPasswd = String.format(SQLStatements.S_GET_PASSWD_BY_NAME,userName);
-
-
 
 		String accessToken = "-1";
 		int uid = -1;
@@ -54,13 +53,14 @@ public class Login extends AbstractAPI {
 		}
 		catch (SQLException se) {
 			Logger.warning(se.getMessage());
+			return new Status(10000, -1, se.getMessage(), 10000);
 		}
 		Logger.debug(String.format("generated access token is : %s", accessToken));
 
 		injectCookies("uid", ((Integer)uid).toString());
 		injectCookies("accesstoken", accessToken);
 
-		return accessToken;
+		return new Status();
 	}
 
 	private String generateAccessToken(String userName) {
