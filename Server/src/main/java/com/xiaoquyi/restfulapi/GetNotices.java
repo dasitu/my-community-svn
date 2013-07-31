@@ -43,13 +43,13 @@ public class GetNotices extends AbstractAPI{
 				String content = rs.getString("info_text");
 				String title = rs.getString("info_title");
 				String poster = rs.getString("user_name"); // the poster
+				String communityName = rs.getString("comm_name");
 				Timestamp publishTime = rs.getTimestamp("info_last_update");
-				Logger.debug(content+ " " + title + " " + publishTime.toString());
-				Notice item = new Notice(title,content,poster,publishTime.toString());
+				Logger.debug(content+ " " + title + " " + publishTime.toString() + " " + communityName + " " + poster);
+				Notice item = new Notice(title,content,poster,publishTime.toString(),communityName);
 				String sqlGetImages = String.format(SQLStatements.S_INFO_IMAGES, rs.getInt("info_id"));
 				ResultSet images = DBconnector.DBQuery(conn,sqlGetImages);
 				while(images.next()) {
-					Logger.debug("xxxxxxxxxxxxxxxxxxxxxxxx");
 					Logger.debug(images.getString("imag_url"));
 					item.addImage(images.getString("imag_url"));
 				}

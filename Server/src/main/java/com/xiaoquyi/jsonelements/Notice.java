@@ -7,6 +7,7 @@ public class Notice extends Element{
 	public String title = "";
 	public String content = "";
 	public String publishTime = "";
+	public String communityName = "";
 	public List<String> images = null;
 	public String poster = ""; 
 	
@@ -15,12 +16,14 @@ public class Notice extends Element{
 	public Notice(String title,
 				  String content,
 				  String poster,
-				  String publishTime) {
+				  String publishTime,
+				  String communityName) {
 		
 		this.title = title;
 		this.content = content;
 		this.publishTime = publishTime;
 		this.poster = poster;
+		this.communityName = communityName;
 	}
 	
 	public void addImage(String image){
