@@ -5,13 +5,13 @@ import java.io.IOException;
 
 import javax.ws.rs.*;
 
-import com.sun.jersey.spi.resource.Singleton;
+//import com.sun.jersey.spi.resource.Singleton;
 import com.xiaoquyi.utilities.*;
 
 
 
 @Path("/test")
-@Singleton
+//@Singleton
 public class Test extends AbstractAPI {
 
 	@GET
