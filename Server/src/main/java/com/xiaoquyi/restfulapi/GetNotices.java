@@ -50,7 +50,7 @@ public class GetNotices extends AbstractAPI{
 				String sqlGetImages = String.format(SQLStatements.S_INFO_IMAGES, rs.getInt("info_id"));
 				ResultSet images = DBconnector.DBQuery(conn,sqlGetImages);
 				while(images.next()) {
-					Logger.debug(images.getString("imag_url"));
+					Logger.debug("the notice " + title + "have a picture:" + images.getString("imag_url"));
 					item.addImage(images.getString("imag_url"));
 				}
 				images.close();
