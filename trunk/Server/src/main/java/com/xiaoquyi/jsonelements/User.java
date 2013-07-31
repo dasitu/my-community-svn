@@ -3,16 +3,13 @@ package com.xiaoquyi.jsonelements;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonTypeInfo;
-
-@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
 public class User extends Element{
 	public String name = "";
 	public String weibo = "";
 	public String qq = "";
 	public String email = "";
 	public String lastAccess = "";
-	public List<Community> communities = null;
+	public List<Element> communities = null;
 
 	public User() {};
 
@@ -29,14 +26,14 @@ public class User extends Element{
 		this.lastAccess = lastAccess;
 	}
 
-	public List<Community> addCommunity(Community community) {
+	public List<Element> addCommunity(Community community) {
 		if (communities == null)
-			communities = new LinkedList<Community>();
+			communities = new LinkedList<Element>();
 		communities.add(community);
 		return communities;
 	}
 
-	public void setCommunities(List<Community> communities) {
+	public void setCommunities(List<Element> communities) {
 		this.communities = communities;
 	}
 }
