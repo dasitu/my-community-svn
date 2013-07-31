@@ -2,7 +2,7 @@ package com.xiaoquyi.utilities;
 
 public class SQLStatements {
 	public static final String S_LATSED_10_INFO = 
-			"select T1.info_id,T1.info_text,T1.info_title,T1.info_last_update,T2.user_name from infor_table T1,user_table T2 where T1.user_id=T2.user_id order by info_id desc limit 10;";
+			"select T1.info_id,T3.comm_name,T1.info_text,T1.info_title,T1.info_last_update,T2.user_name from infor_table T1,user_table T2,community_table T3 where T1.user_id=T2.user_id and T1.comm_id=T3.comm_id order by info_id desc limit 10;";
 	
 	public static final String S_INFO_IMAGES = "select imag_url from image_table where info_id=%s;";
 	
