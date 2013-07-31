@@ -11,6 +11,7 @@ import javax.naming.NamingException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
+import com.xiaoquyi.jsonelements.Elements;
 import com.xiaoquyi.jsonelements.Status;
 import com.xiaoquyi.jsonelements.User;
 import com.xiaoquyi.jsonelements.Users;
@@ -29,11 +30,12 @@ public class GetUsers extends AbstractAPI {
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Users getUsers() throws IOException, SQLException, NamingException, ParseException {
+	public Elements getUsers() throws IOException, SQLException, NamingException, ParseException {
 		allowCORS(); 
 		Logger.info(getSelfInfo());
 		
-		Users users = new Users();
+//		Users users = new Users();
+		Elements users = new Elements();
 		
 		if (!accessTokenValidation()) {
 			Logger.info("access token error or expired!");
@@ -61,7 +63,7 @@ public class GetUsers extends AbstractAPI {
 				ResultSet communities = DBconnector.DBQuery(conn,sqlGetCommunities);
 				user.setCommunities(LoadElements.loadCommunities(communities));
 				communities.close();
-				users.addUser(user);			
+				users.addElement(user);			
 			}
 			rs.close();
 			conn.close();

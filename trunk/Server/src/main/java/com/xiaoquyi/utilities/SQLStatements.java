@@ -13,7 +13,7 @@ public class SQLStatements {
 	
 	public static final String S_GET_COMMUNITIES_BY_UID = "select T2.* from mapping_table T1,community_view T2 where T1.user_id=%s and T1.comm_id = T2.comm_id;";
 	
-	public static final String S_GET_COMMUNITIES = "select * from community_view;";
+	public static final String S_GET_COMMUNITIES = "select * from community_view order by comm_id desc limit 10;;";
 	
 	
 	public static final String S_GET_ACCESSTOKEN_BY_UID = "select * from session_table where user_id=%s;";

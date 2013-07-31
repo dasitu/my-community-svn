@@ -8,6 +8,7 @@ import javax.naming.NamingException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
+import com.xiaoquyi.jsonelements.Elements;
 import com.xiaoquyi.jsonelements.Notice;
 import com.xiaoquyi.jsonelements.Notices;
 import com.xiaoquyi.jsonelements.Status;
@@ -24,13 +25,13 @@ public class GetNotices extends AbstractAPI{
 	 *@return One instance of \ref jsonelements.Notices have 10 latest notices which in the form of json list
 	 */
 	
-	public Notices getLatest10Notices() throws IOException, NamingException, SQLException, ParseException {
+	public Elements getLatest10Notices() throws IOException, NamingException, SQLException, ParseException {
 		allowCORS(); 
-		Notices data = new Notices();
+		Elements notices = new Elements();
 		if (!accessTokenValidation()) {
 			Logger.info("Access token error or expired!");
-			data.setStatus(new Status(10000, -1, "Access token error or expired!", 10000));
-			return data;
+			notices.setStatus(new Status(10000, -1, "Access token error or expired!", 10000));
+			return notices;
 		}
 		Logger.info(getSelfInfo());
 		
@@ -48,22 +49,23 @@ public class GetNotices extends AbstractAPI{
 				String sqlGetImages = String.format(SQLStatements.S_INFO_IMAGES, rs.getInt("info_id"));
 				ResultSet images = DBconnector.DBQuery(conn,sqlGetImages);
 				while(images.next()) {
+					Logger.debug("xxxxxxxxxxxxxxxxxxxxxxxx");
 					Logger.debug(images.getString("imag_url"));
 					item.addImage(images.getString("imag_url"));
 				}
 				images.close();
-				data.addNotice(item);		
+				notices.addElement(item);	
 			}
 			rs.close();
 			conn.close();
-			data.setStatus(new Status());
-			return data;
+			notices.setStatus(new Status());
+			return notices;
 
 		}
 		catch (SQLException e) {
 			Logger.error(e.getMessage());
-			data.setStatus(new Status(10000, -1, e.getMessage(), 10000));
-			return null;
+			notices.setStatus(new Status(10000, -1, e.getMessage(), 10000));
+			return notices;
 		}
 		
 	}

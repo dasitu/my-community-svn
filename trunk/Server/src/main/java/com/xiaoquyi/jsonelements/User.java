@@ -3,6 +3,9 @@ package com.xiaoquyi.jsonelements;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonTypeInfo;
+
+@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
 public class User extends Element{
 	public String name = "";
 	public String weibo = "";
