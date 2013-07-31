@@ -9,8 +9,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 import com.xiaoquyi.jsonelements.Elements;
-import com.xiaoquyi.jsonelements.Notice;
-import com.xiaoquyi.jsonelements.Notices;
 import com.xiaoquyi.jsonelements.Status;
 import com.xiaoquyi.utilities.*;
 
