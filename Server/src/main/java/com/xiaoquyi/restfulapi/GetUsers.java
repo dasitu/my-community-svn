@@ -6,11 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.util.List;
 
 import javax.naming.NamingException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
+import com.xiaoquyi.jsonelements.Community;
 import com.xiaoquyi.jsonelements.Elements;
 import com.xiaoquyi.jsonelements.Status;
 import com.xiaoquyi.jsonelements.User;
@@ -50,21 +52,22 @@ public class GetUsers extends AbstractAPI {
 			if (rs == null)
 				return null;
 
+			users.setElements(LoadElements.loadElements(conn, rs, new LoadElements.LoadUser()));
 			
-			while (rs.next()) {
-				String name = rs.getString("user_name");
-				String weibo = rs.getString("user_weibo");
-				String qq = rs.getString("user_qq");
-				String email = rs.getString("user_email");
-				Timestamp lastAccess = rs.getTimestamp("user_last_update");
-				Logger.debug(name+ " " + weibo + " " + qq + " " +  email + " " +  lastAccess.toString());
-				User user = new User(name,weibo,qq,email,lastAccess.toString());
-				String sqlGetCommunities = String.format(SQLStatements.S_GET_COMMUNITIES_BY_UID,rs.getString("user_id"));
-				ResultSet communities = DBconnector.DBQuery(conn,sqlGetCommunities);
-				user.setCommunities(LoadElements.loadCommunities(communities));
-				communities.close();
-				users.addElement(user);			
-			}
+//			while (rs.next()) {
+//				String name = rs.getString("user_name");
+//				String weibo = rs.getString("user_weibo");
+//				String qq = rs.getString("user_qq");
+//				String email = rs.getString("user_email");
+//				Timestamp lastAccess = rs.getTimestamp("user_last_update");
+//				Logger.debug(name+ " " + weibo + " " + qq + " " +  email + " " +  lastAccess.toString());
+//				User user = new User(name,weibo,qq,email,lastAccess.toString());
+//				String sqlGetCommunities = String.format(SQLStatements.S_GET_COMMUNITIES_BY_UID,rs.getString("user_id"));
+//				ResultSet communities = DBconnector.DBQuery(conn,sqlGetCommunities);
+//				user.setCommunities(LoadElements.loadElements(communities, new LoadElements.LoadCommunity()));
+//				communities.close();
+//				users.addElement(user);			
+//			}
 			rs.close();
 			conn.close();
 			users.setStatus(new Status());
@@ -72,7 +75,7 @@ public class GetUsers extends AbstractAPI {
 
 		}
 		catch (SQLException e) {
-			Logger.warning(e.getMessage());
+			Logger.warning(e.fillInStackTrace().toString());
 			users.setStatus(new Status(10000, -1, e.getMessage(), 10000));
 			return users;
 		}

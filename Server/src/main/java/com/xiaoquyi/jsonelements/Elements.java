@@ -3,10 +3,6 @@ package com.xiaoquyi.jsonelements;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
-
-//@XmlRootElement 
 public class Elements extends Element {
 
 	public List<Element> data = null;

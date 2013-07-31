@@ -40,7 +40,7 @@ public class GetCommunities extends AbstractAPI {
 				return communities;
 			}
 			
-			communities.setElements(LoadElements.loadCommunities(rs));
+			communities.setElements(LoadElements.loadElements(rs, new LoadElements.LoadCommunity()));
 			rs.close();
 			conn.close();
 			return communities;
