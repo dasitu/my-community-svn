@@ -87,8 +87,6 @@ public class LoadElements {
 		}
 		return list;
 	}
-	
-
 }
 
 

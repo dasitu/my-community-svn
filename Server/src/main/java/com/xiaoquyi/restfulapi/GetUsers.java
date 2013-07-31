@@ -52,7 +52,6 @@ public class GetUsers extends AbstractAPI {
 
 		}
 		catch (SQLException e) {
-			Logger.warning(e.fillInStackTrace().toString());
 			users.setStatus(new Status(10000, -1, e.getMessage(), 10000));
 			return users;
 		}
