@@ -43,16 +43,16 @@ public class GetNotices extends AbstractAPI{
 		try {
 			Connection conn = DBconnector.getConnection();
 			String sqlClause = null;
-			String timeCondtion = null;
+			String timeScope = null;
 			if (pageflag.equals("0")) {
-				timeCondtion = "< CURRENT_TIMESTAMP";
+				timeScope = "< CURRENT_TIMESTAMP";
 			} else if (pageflag.equals("1")) {
-				timeCondtion = " > " + "'" + pagetime + "'" ;
+				timeScope = " > " + "'" + pagetime + "'" ;
 			} else if (pageflag.equals("2")) {
-				timeCondtion = " < " +  "'" + pagetime + "'" ;
+				timeScope = " < " +  "'" + pagetime + "'" ;
 			}
 			
-			sqlClause = String.format(SQLStatements.S_GET_INFO, timeCondtion, pageItems);
+			sqlClause = String.format(SQLStatements.S_GET_INFO, timeScope, pageItems);
 			ResultSet rs = DBconnector.DBQuery(conn,sqlClause);
 
 			notices.setElements(LoadElements.loadElements(conn, rs, new LoadElements.LoadNotice()));
