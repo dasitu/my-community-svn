@@ -45,11 +45,11 @@ public class GetNotices extends AbstractAPI{
 			String sqlClause = null;
 			String timeCondtion = null;
 			if (pageflag.equals("0")) {
-				timeCondtion = "";
+				timeCondtion = "< CURRENT_TIMESTAMP";
 			} else if (pageflag.equals("1")) {
-				timeCondtion = "and T1.info_last_update > " + "'" + pagetime + "'" ;
+				timeCondtion = " > " + "'" + pagetime + "'" ;
 			} else if (pageflag.equals("2")) {
-				timeCondtion = "and T1.info_last_update < " +  "'" + pagetime + "'" ;
+				timeCondtion = " < " +  "'" + pagetime + "'" ;
 			}
 			
 			sqlClause = String.format(SQLStatements.S_GET_INFO, timeCondtion, pageItems);
