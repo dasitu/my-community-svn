@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.xiaoquyi.jsonelements.Community;
 import com.xiaoquyi.jsonelements.Element;
+import com.xiaoquyi.jsonelements.Notice;
 import com.xiaoquyi.jsonelements.User;
 
 
@@ -55,6 +56,26 @@ public class LoadElements {
 			user.setCommunities(LoadElements.loadElements(conn,communities, new LoadCommunity()));
 			communities.close();
 			return user;
+		}
+	}
+	
+	public static class LoadNotice implements LoadElement{
+		public  Element loadElementFromDb(final Connection conn,final ResultSet rs) throws SQLException, IOException {
+			
+			String content = rs.getString("info_text");
+			String title = rs.getString("info_title");
+			String poster = rs.getString("user_name"); // the poster
+			String communityName = rs.getString("comm_name");
+			Timestamp publishTime = rs.getTimestamp("info_last_update");
+			Logger.debug(content+ " " + title + " " + publishTime.toString() + " " + communityName + " " + poster);
+			Notice item = new Notice(title,content,poster,publishTime.toString(),communityName);
+			String sqlGetImages = String.format(SQLStatements.S_INFO_IMAGES, rs.getInt("info_id"));
+			ResultSet images = DBconnector.DBQuery(conn,sqlGetImages);
+			while(images.next()) {
+				Logger.debug("the notice " + title + "have a picture:" + images.getString("imag_url"));
+				item.addImage(images.getString("imag_url"));
+			}
+			return item;
 		}
 	}
 

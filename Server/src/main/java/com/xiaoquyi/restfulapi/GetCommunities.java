@@ -3,13 +3,13 @@ package com.xiaoquyi.restfulapi;
 import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
-import java.util.*;
+
 
 import javax.naming.NamingException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-import com.xiaoquyi.jsonelements.Community;
+
 import com.xiaoquyi.jsonelements.Elements;
 import com.xiaoquyi.jsonelements.Status;
 import com.xiaoquyi.utilities.*;
@@ -34,15 +34,11 @@ public class GetCommunities extends AbstractAPI {
 			
 			Connection conn = DBconnector.getConnection();
 			ResultSet rs = DBconnector.DBQuery(conn,SQLStatements.S_GET_COMMUNITIES);
-
-			if (rs == null) {
-				communities.setStatus(new Status(10000,-1,"access token expired!",10000));
-				return communities;
-			}
 			
-			communities.setElements(LoadElements.loadElements(rs, new LoadElements.LoadCommunity()));
+			communities.setElements(LoadElements.loadElements(conn, rs, new LoadElements.LoadCommunity()));
 			rs.close();
 			conn.close();
+			communities.setStatus(new Status());
 			return communities;
 
 		}
