@@ -21,8 +21,7 @@ interface LoadElement {
 
 
 public class LoadElements {
-	
-	
+
 	public static class LoadCommunity implements LoadElement{
 		public  Element loadElementFromDb(final Connection conn,final ResultSet rs) throws SQLException, IOException {
 			
