@@ -49,9 +49,6 @@ public class GetUsers extends AbstractAPI {
 			Connection conn = DBconnector.getConnection();
 			ResultSet rs = DBconnector.DBQuery(conn,SQLStatements.S_GET_USERS);
 
-			if (rs == null)
-				return null;
-
 			users.setElements(LoadElements.loadElements(conn, rs, new LoadElements.LoadUser()));
 			
 //			while (rs.next()) {
