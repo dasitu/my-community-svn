@@ -15,9 +15,9 @@ import com.xiaoquyi.utilities.*;
 public class UserRegistering extends AbstractAPI {
 	
 	@OPTIONS
-	public Response optionsResponse() throws IOException {
+	public Status optionsResponse() throws IOException {
 		allowCORS();
-		return Response.status(200).entity("asafdsa").build();
+		return new Status();
 	}
 	
 

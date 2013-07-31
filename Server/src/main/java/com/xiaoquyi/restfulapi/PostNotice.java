@@ -16,19 +16,17 @@ import javax.ws.rs.core.*;
 
 
 import com.sun.jersey.multipart.*;
+import com.xiaoquyi.jsonelements.Status;
 import com.xiaoquyi.utilities.*;
 
 @Path("/post_notice")
 public class PostNotice extends AbstractAPI{
-	
-	
+
+
 	@OPTIONS
-	public Response optionsResponse() throws IOException {
-		
-		
+	public Status optionsResponse() throws IOException {
 		allowCORS();
-		
-		return Response.status(200).entity("asafdsa").build();
+		return new Status();
 
 	}
 
@@ -44,7 +42,7 @@ public class PostNotice extends AbstractAPI{
 	 */
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public Response getPost(
+	public Status getPost(
 			@FormDataParam("title") String title,
 			@FormDataParam("content") String content,
 			@FormDataParam("uid") String uid, //TODO:get this value from cookie
@@ -53,44 +51,47 @@ public class PostNotice extends AbstractAPI{
 			@FormDataParam("file") List<FormDataBodyPart> dataBodies) throws IOException, SQLException, NamingException {
 		allowCORS();
 		// The column order is info_id,user_id,comminity_id,info_text,info_visible,info_last_update and info_title.
-		
+
 		String newNotice = String.format(SQLStatements.I_POST_NOTICE, uid, communityID,content,visible,title);
-		
-		Connection conn = DBconnector.getConnection();
-		int noticeId = DBconnector.DBUpdate(conn, newNotice);
-		
-		
-		Logger.info(newNotice);
-		
-		
-		String addImage = null;
-		if (dataBodies == null)
-			return Response.status(200).entity("dfsfds").build();
-		for(FormDataBodyPart dataBody:dataBodies) {
 
-			String fileName = dataBody.getContentDisposition().getFileName();
-			String baseName = fileName.substring(0, fileName.lastIndexOf(".")-1);
-			String extend = fileName.substring(fileName.lastIndexOf("."));
-			String uniqueName =  baseName 
-					+ "_" 
-					+ Long.toString(Miscellaneous.getCurrentTimeInSeconds())  
-					+ extend;
-			String uploadedFileLocation = Miscellaneous.IMAGE_REPOSITORY + uniqueName;
-			InputStream is = dataBody.getValueAs(InputStream.class);
+		try {
+			Connection conn = DBconnector.getConnection();
+			int noticeId = DBconnector.DBUpdate(conn, newNotice);
 
-			
-			// save it
-			writeToFile(is, uploadedFileLocation);
-			String url = "http://localhost:8080/"+Miscellaneous.IMAGE_FOLDER+uniqueName;
-			Logger.info("file URL is = " + url);
-			
-			addImage = String.format(SQLStatements.I_NOTICE_IMAGE, noticeId, url);
-			DBconnector.DBUpdate(conn, addImage);
-			Logger.info(addImage);
-			
+			Logger.info(newNotice);
+
+			String addImage = null;
+			if (dataBodies == null)
+				return new Status();
+			for(FormDataBodyPart dataBody:dataBodies) {
+
+				String fileName = dataBody.getContentDisposition().getFileName();
+				String baseName = fileName.substring(0, fileName.lastIndexOf(".")-1);
+				String extend = fileName.substring(fileName.lastIndexOf("."));
+				String uniqueName =  baseName 
+						+ "_" 
+						+ Long.toString(Miscellaneous.getCurrentTimeInSeconds())  
+						+ extend;
+				String uploadedFileLocation = Miscellaneous.IMAGE_REPOSITORY + uniqueName;
+				InputStream is = dataBody.getValueAs(InputStream.class);
+
+
+				// save it
+				writeToFile(is, uploadedFileLocation);
+				String url = "http://localhost:8080/"+Miscellaneous.IMAGE_FOLDER+uniqueName;
+				Logger.info("file URL is = " + url);
+
+				addImage = String.format(SQLStatements.I_NOTICE_IMAGE, noticeId, url);
+				DBconnector.DBUpdate(conn, addImage);
+				Logger.info(addImage);
+
+			}
+			conn.close();
+			return new Status();
 		}
-		conn.close();
-		return Response.status(200).entity("dfsfds").build();
+		catch (SQLException se) {
+			return new Status(1000,-1,se.getMessage(),1000);
+		}
 
 	}
 
