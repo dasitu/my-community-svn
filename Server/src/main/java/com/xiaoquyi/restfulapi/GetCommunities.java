@@ -10,6 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 
+import com.sun.jersey.multipart.FormDataParam;
 import com.xiaoquyi.jsonelements.Elements;
 import com.xiaoquyi.jsonelements.Status;
 import com.xiaoquyi.utilities.*;
@@ -21,7 +22,7 @@ public class GetCommunities extends AbstractAPI {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Elements getLatest10Notices() throws IOException, NamingException, ParseException {
+	public Elements getCommunities() throws IOException, NamingException, ParseException {
 		allowCORS();
 		Logger.info(getSelfInfo());
 		Elements communities = new Elements();
