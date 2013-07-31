@@ -4,10 +4,10 @@ public class SQLStatements {
 
 	// NOTICE RELATED
 	//**************************************************************************************************************************************************************************************************************************************************
-	public static final String S_LATSED_10_INFO = 
+	public static final String S_GET_INFO = 
 			"select T1.info_id,T3.comm_name,T1.info_text,T1.info_title,T1.info_last_update,T2.user_name " +
 			"from infor_table T1,user_table T2,community_table T3 " +
-			"where T1.user_id=T2.user_id and T1.comm_id=T3.comm_id order by info_id desc limit 10;";
+			"where T1.user_id=T2.user_id and T1.comm_id=T3.comm_id %s order by info_id desc limit %s;";
 	// The column order is info_id,user_id,comminity_id,info_text,info_visible, info_title, info_last_update.
 	public static final String I_POST_NOTICE = "INSERT INTO infor_table VALUES (0, %s, %s, '%s',%s,'%s',CURRENT_TIMESTAMP);";
 	// The column order is imag_id,info_id,imag_url and timestamp.
@@ -21,7 +21,7 @@ public class SQLStatements {
 	//COMMUNITY RELATED
 	//**************************************************************************************************************************************************************************************************************************************************
 	public static final String S_GET_COMMUNITIES_BY_UID = "select T2.* from mapping_table T1,community_view T2 where T1.user_id=%s and T1.comm_id = T2.comm_id;";
-	public static final String S_GET_COMMUNITIES = "select * from community_view order by comm_id desc limit 10;;";
+	public static final String S_GET_COMMUNITIES = "select * from community_view order by comm_id desc limit 10;";
 	//**************************************************************************************************************************************************************************************************************************************************
 	
 	

@@ -20,10 +20,17 @@ public class GetNotices extends AbstractAPI{
 	@Produces(MediaType.APPLICATION_JSON)
 	/**@brief This interface accept the http GET request to get latest 10 notices. API address: The \b /get_notices 
 	 * 
+	 *@pageflag This parameter indicate the the request page direction, 0 for first page, 1 for latest pages and 2 for previous pages
+	 *@pagetime This parameter specify the the begin time of the requesting page;  set it to the time of first item of last request when pageflag = 1
+	 *or set to the last item time of last requested items when  pageflag = 2, ingore it when pageflag = 0
+	 *@pageItems The amount of the requesting items of a page, default to 10
 	 *@return One instance of \ref jsonelements.Notices have 10 latest notices which in the form of json list
 	 */
 	
-	public Elements getLatest10Notices() throws IOException, NamingException, SQLException, ParseException {
+	public Elements getNotices(
+			@QueryParam("pageflag") String pageflag,
+			@QueryParam("pagetime") String pagetime,
+			@DefaultValue("10") @QueryParam("pageItems") String pageItems) throws IOException, NamingException, SQLException, ParseException {
 		allowCORS(); 
 		Elements notices = new Elements();
 		if (!accessTokenValidation()) {
@@ -35,7 +42,18 @@ public class GetNotices extends AbstractAPI{
 		
 		try {
 			Connection conn = DBconnector.getConnection();
-			ResultSet rs = DBconnector.DBQuery(conn,SQLStatements.S_LATSED_10_INFO);
+			String sqlClause = null;
+			String timeCondtion = null;
+			if (pageflag.equals("0")) {
+				timeCondtion = "";
+			} else if (pageflag.equals("1")) {
+				timeCondtion = "and T1.info_last_update > " + "'" + pagetime + "'" ;
+			} else if (pageflag.equals("2")) {
+				timeCondtion = "and T1.info_last_update < " +  "'" + pagetime + "'" ;
+			}
+			
+			sqlClause = String.format(SQLStatements.S_GET_INFO, timeCondtion, pageItems);
+			ResultSet rs = DBconnector.DBQuery(conn,sqlClause);
 
 			notices.setElements(LoadElements.loadElements(conn, rs, new LoadElements.LoadNotice()));
 			rs.close();
