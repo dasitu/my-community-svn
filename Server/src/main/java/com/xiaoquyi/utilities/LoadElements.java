@@ -25,16 +25,13 @@ public class LoadElements {
 	public static class LoadCommunity implements LoadElement{
 		public  Element loadElementFromDb(final Connection conn,final ResultSet rs) throws SQLException, IOException {
 			
-			String province = rs.getString("prov_name");
-			String city = rs.getString("city_name");
-			String area = rs.getString("area_name");
 			String name = rs.getString("comm_name");
-			String address = rs.getString("comm_address");
+			String address = rs.getString("comm_full_address");
 			int active = rs.getInt("comm_active");
 			Timestamp lastAccess = rs.getTimestamp("comm_last_update");
-			Logger.debug(province+ " " + city + " " + area + " " + name + " " + address
+			Logger.debug(name + ":" + address
 					+ " " + lastAccess.toString());
-			return new Community(province,city,area,address,name,active,lastAccess.toString());
+			return new Community(address,name,active,lastAccess.toString());
 			
 		}
 	}
