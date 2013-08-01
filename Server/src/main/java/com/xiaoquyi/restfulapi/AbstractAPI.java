@@ -106,10 +106,10 @@ public class AbstractAPI {
 		Date la = DateFormat.getDateTimeInstance().parse(lastAccess.toString());
 		long laInSecond = la.getTime();
 		
-		long timeGap = currentTime-laInSecond;
-		Logger.debug(String.format("Time gap = %s", timeGap));
+		long timeSpan = currentTime-laInSecond;
+		Logger.debug(String.format("Time span = %s", timeSpan));
 		
-		if (accessToken.equals(accessTokenInCookie) && timeGap<Miscellaneous.SESSION_EXPIRED_TIME) {
+		if (accessToken.equals(accessTokenInCookie) && timeSpan<Miscellaneous.SESSION_EXPIRED_TIME) {
 			
 			return true;
 		}

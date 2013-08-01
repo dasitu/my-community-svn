@@ -9,8 +9,6 @@ import javax.naming.NamingException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-
-import com.sun.jersey.multipart.FormDataParam;
 import com.xiaoquyi.jsonelements.Elements;
 import com.xiaoquyi.jsonelements.Status;
 import com.xiaoquyi.utilities.*;
@@ -22,6 +20,12 @@ public class GetCommunities extends AbstractAPI {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
+	/**@brief This interface accept the http GET request to get communities according to the query parameter. API address: The \b /get_communities 
+	 * 
+	 *@Param name This parameter specify the query keyword which could be a full community name or just a part of, if no such parameter supplied
+	 *that means query all communities.
+	 *@return One list of \ref jsonelements.Community in the form of json list
+	 */
 	public Elements getCommunities(
 			@DefaultValue("") @QueryParam("name") String name) throws IOException, NamingException, ParseException {
 		allowCORS();
