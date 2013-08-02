@@ -6,7 +6,6 @@ import java.sql.*;
 import javax.naming.NamingException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import com.xiaoquyi.jsonelements.Status;
 import com.xiaoquyi.utilities.*;
