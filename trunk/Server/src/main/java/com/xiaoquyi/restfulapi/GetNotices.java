@@ -20,10 +20,10 @@ public class GetNotices extends AbstractAPI{
 	@Produces(MediaType.APPLICATION_JSON)
 	/**@brief This interface accept the http GET request to get notices based on the query confition. API address: The \b /get_notices 
 	 * 
-	 *@Param pageflag This parameter indicate the the request page direction, 0 for first page, 1 for latest pages and 2 for previous pages
-	 *@Param pagetime This parameter specify the the begin time of the requesting page;  set it to the time of first item of last request when pageflag = 1
+	 *@param pageflag This parameter indicate the the request page direction, 0 for first page, 1 for latest pages and 2 for previous pages
+	 *@param pagetime This parameter specify the the begin time of the requesting page;  set it to the time of first item of last request when pageflag = 1
 	 *or set to the last item time of last requested items when  pageflag = 2, ingore it when pageflag = 0
-	 *@Param pageItems The amount of the requesting items of a page, default to 10
+	 *@param pageItems The amount of the requesting items of a page, default to 10
 	 *@return One list of \ref jsonelements.Notice have specified by \ref pageItems amount notices which in the form of json list
 	 */
 	

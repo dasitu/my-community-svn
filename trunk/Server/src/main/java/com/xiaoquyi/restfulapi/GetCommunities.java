@@ -22,7 +22,7 @@ public class GetCommunities extends AbstractAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	/**@brief This interface accept the http GET request to get communities according to the query parameter. API address: The \b /get_communities 
 	 * 
-	 *@Param name This parameter specify the query keyword which could be a full community name or just a part of, if no such parameter supplied
+	 *@param name This parameter specify the query keyword which could be a full community name or just a part of, if no such parameter supplied
 	 *that means query all communities.
 	 *@return One list of \ref jsonelements.Community in the form of json list
 	 */
