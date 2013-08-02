@@ -16,7 +16,7 @@ public class DBconnector {
 		return conn;
 	}
 
-	/*
+	/**
 	 * This method is used to execute a sql clause, which will query data from the DB was refereed in \a sqlStatement
 	 * 
 	 * @param conn The connection to the mysql DB
@@ -41,7 +41,7 @@ public class DBconnector {
 	}
 
 
-	/*
+	/**
 	 * This method is used to execute a sql clause, which will insert into data or update existed data in DB 
 	 * 
 	 * @param conn The connection to the mysql DB
